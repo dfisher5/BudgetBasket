@@ -16,6 +16,7 @@
 		1C0863F22CA330390084AEB0 /* BudgetBasketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0863F12CA330390084AEB0 /* BudgetBasketTests.swift */; };
 		1C0863FC2CA330390084AEB0 /* BudgetBasketUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0863FB2CA330390084AEB0 /* BudgetBasketUITests.swift */; };
 		1C0863FE2CA330390084AEB0 /* BudgetBasketUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0863FD2CA330390084AEB0 /* BudgetBasketUITestsLaunchTests.swift */; };
+		B4967D0D2CBD66EC000103A6 /* AddItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4967D0C2CBD66EC000103A6 /* AddItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		1C0863F72CA330390084AEB0 /* BudgetBasketUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BudgetBasketUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C0863FB2CA330390084AEB0 /* BudgetBasketUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetBasketUITests.swift; sourceTree = "<group>"; };
 		1C0863FD2CA330390084AEB0 /* BudgetBasketUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetBasketUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B4967D0C2CBD66EC000103A6 /* AddItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 				1C0863DB2CA330340084AEB0 /* BudgetBasketApp.swift */,
 				1C0863DD2CA330340084AEB0 /* ContentView.swift */,
 				1C0863DF2CA330380084AEB0 /* Assets.xcassets */,
+				B4967D0C2CBD66EC000103A6 /* AddItemView.swift */,
 				1C0863E42CA330380084AEB0 /* Persistence.swift */,
 				1C0863E62CA330380084AEB0 /* BudgetBasket.xcdatamodeld */,
 				1C0863E12CA330380084AEB0 /* Preview Content */,
@@ -267,6 +270,7 @@
 				1C0863DE2CA330340084AEB0 /* ContentView.swift in Sources */,
 				1C0863E82CA330380084AEB0 /* BudgetBasket.xcdatamodeld in Sources */,
 				1C0863DC2CA330340084AEB0 /* BudgetBasketApp.swift in Sources */,
+				B4967D0D2CBD66EC000103A6 /* AddItemView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
