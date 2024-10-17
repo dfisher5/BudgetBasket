@@ -9,8 +9,9 @@ import SwiftUI
 
 struct GroceryListView: View {
     @State private var itemToAdd: String = ""
-    @State private var groceryList: [String] = [""]
+    @State private var groceryList: [String] = []
     @State private var listDisplay: String = ""
+    //@State private var strings: [String] = []
     //var items: FetchedResults<Item>
     //@State private var items:
     
@@ -44,10 +45,20 @@ struct GroceryListView: View {
                 TextField("Item Name", text: $itemToAdd).padding(.trailing, 30).padding(.leading, 30).textFieldStyle(.roundedBorder)
                 Button("Add Item") {
                     addToList() }
-                VStack() {
-                    HStack() {
-                        Text(listDisplay).padding(.trailing, 30).padding(.leading, 30)
-                        Spacer()
+                //VStack() {
+                    //HStack() {
+                        //Text(listDisplay).padding(.trailing, 30).padding(.leading, 30)
+                        //Spacer()
+                    //}
+                //}
+                List {
+                    ForEach(groceryList, id: \.self) { string in Text(string) .swipeActions(edge: .trailing) {
+                            Button(role: .destructive) {
+                                groceryList.removeAll(where: { $0 == string })
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        }
                     }
                 }
                 Spacer()
