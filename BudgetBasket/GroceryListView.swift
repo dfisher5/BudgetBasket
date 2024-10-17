@@ -11,12 +11,16 @@ struct GroceryListView: View {
     @State private var itemToAdd: String = ""
     @State private var groceryList: [String] = [""]
     @State private var listDisplay: String = ""
+    //var items: FetchedResults<Item>
+    //@State private var items:
     
     func addToList() {
         groceryList.append(itemToAdd)
         listDisplay += itemToAdd
         listDisplay += "\n"
         listDisplay += "\n"
+        //let newItem = NSSortDescriptor(key: itemToAdd, ascending: true)
+        //items.nsSortDescriptors.append(newItem)
     }
     
     func removeFromList() {
