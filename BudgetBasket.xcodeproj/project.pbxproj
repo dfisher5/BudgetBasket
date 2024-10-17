@@ -47,6 +47,7 @@
 		1CCEF4E92CBEDBA000AA9BCA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1CCEF4E82CBEDBA000AA9BCA /* GoogleService-Info.plist */; };
 		1CCEF4EA2CBEDBA000AA9BCA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1CCEF4E82CBEDBA000AA9BCA /* GoogleService-Info.plist */; };
 		1CCEF4EB2CBEDBA000AA9BCA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1CCEF4E82CBEDBA000AA9BCA /* GoogleService-Info.plist */; };
+		2262BE822CC083B1002F0FC7 /* GroceryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2262BE812CC083B1002F0FC7 /* GroceryListView.swift */; };
 		B4967D0D2CBD66EC000103A6 /* AddItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4967D0C2CBD66EC000103A6 /* AddItemView.swift */; };
 /* End PBXBuildFile section */
 
@@ -85,6 +86,7 @@
 		1C77D8622CBF64550067462B /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		1C8D27D22CBE0C93001E857A /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		1CCEF4E82CBEDBA000AA9BCA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2262BE812CC083B1002F0FC7 /* GroceryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryListView.swift; sourceTree = "<group>"; };
 		B4967D0C2CBD66EC000103A6 /* AddItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -172,6 +174,7 @@
 				1C0863E62CA330380084AEB0 /* BudgetBasket.xcdatamodeld */,
 				1C0863E12CA330380084AEB0 /* Preview Content */,
 				1C77D8622CBF64550067462B /* ItemDetailView.swift */,
+				2262BE812CC083B1002F0FC7 /* GroceryListView.swift */,
 			);
 			path = BudgetBasket;
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 				1C0863DE2CA330340084AEB0 /* ContentView.swift in Sources */,
 				1C0863E82CA330380084AEB0 /* BudgetBasket.xcdatamodeld in Sources */,
 				1C77D8632CBF64550067462B /* ItemDetailView.swift in Sources */,
+				2262BE822CC083B1002F0FC7 /* GroceryListView.swift in Sources */,
 				1C0863DC2CA330340084AEB0 /* BudgetBasketApp.swift in Sources */,
 				1C8D27D32CBE0C93001E857A /* SearchView.swift in Sources */,
 				B4967D0D2CBD66EC000103A6 /* AddItemView.swift in Sources */,
