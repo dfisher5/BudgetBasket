@@ -66,7 +66,7 @@ struct GroceryListView: View {
             
         }.padding()
             .onAppear() {
-                if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("myData.plist") {
+                if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("groceryList.plist") {
                     if let data = try? Data(contentsOf: url) {
                         if let decodedValues = try? PropertyListDecoder().decode([String].self, from: data) {
                             groceryList = decodedValues
@@ -75,12 +75,12 @@ struct GroceryListView: View {
                 }
             }
             .onChange(of: groceryList) { newValues in
-                if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("myData.plist") {
+                if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("groceryList.plist") {
                     if let encodedData = try? PropertyListEncoder().encode(newValues) {
                         try? encodedData.write(to: url, options: .atomic)
                     }
                 }
-            } 
+            }
     }
 
 }
