@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NavBarView: View {
     @State private var random : Int = 0
-    var screen : ScreenTracker
+    @EnvironmentObject var screen : ScreenTracker
     
     var body: some View {
         HStack {
@@ -47,5 +47,5 @@ struct NavBarView: View {
 }
 
 #Preview {
-    NavBarView(screen: ScreenTracker())
+    NavBarView()
 }

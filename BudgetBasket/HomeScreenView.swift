@@ -19,7 +19,7 @@ class ScreenTracker : ObservableObject {
 }
 
 struct HomeScreenView: View {
-    @EnvironmentObject var screen : ScreenTracker 
+    @StateObject var screen = ScreenTracker()
     var body: some View {
         GeometryReader { geo in
             VStack {
@@ -36,7 +36,7 @@ struct HomeScreenView: View {
                 }
                 .frame(width: geo.size.width, height: geo.size.height - 50)
                 
-                NavBarView(screen: screen)
+                NavBarView()
                 
             }
         }
