@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Store {
+struct Store : Hashable {
     var storeName: String = ""
     var price: Double = 0.0
     var temporaryPrice: Bool = false

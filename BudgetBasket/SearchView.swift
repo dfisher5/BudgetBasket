@@ -8,15 +8,41 @@ import SwiftUI
  
 struct SearchView: View {
     @StateObject var itemStore = ItemStore()
+    @State private var searchText = ""
 
     var body: some View {
-        List(itemStore.allItems) { item in
-            VStack() {
-                Text(item.itemName)
-                ForEach(item.stores, id: \.storeName) { store in
-                    Text("\(store.storeName): $\(store.price, specifier: "%.2f")")
+        NavigationStack {
+                NavigationLink(destination: AddItemView()) {
+                    Text("Add item")
+                    .padding(.horizontal, 100)
+                    .padding(.vertical, 10)
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    .font(.title3)
                 }
+                List {
+                    ForEach(searchResults, id: \.self) { item in
+                        NavigationLink {
+                            ItemDetailView(itemName: item)
+                        } label: {
+                            Text(item)
+                        }
+                    }
+                }.searchable(text: $searchText)
+                .navigationTitle("Search Items")
             }
+        }
+    
+    var allItemNames: [String] {
+        itemStore.allItems.map { $0.itemName }
+    }
+    
+    var searchResults: [String] {
+        if searchText.isEmpty {
+            return allItemNames
+        } else {
+            return allItemNames.filter { $0.contains(searchText) }
         }
     }
 }

@@ -9,6 +9,7 @@ import Foundation
 
 class ItemStore: ObservableObject {
     @Published var allItems: [GroceryItem]
+    
     init() {
         allItems = []
         allItems.append(GroceryItem(itemNumber: 1))
@@ -19,7 +20,5 @@ class ItemStore: ObservableObject {
         allItems.append(GroceryItem(itemNumber: 6))
         allItems.append(GroceryItem(itemNumber: 7))
         allItems.append(GroceryItem(itemNumber: 8))
-
-
     }
 }
