@@ -21,4 +21,8 @@ class ItemStore: ObservableObject {
         allItems.append(GroceryItem(itemNumber: 7))
         allItems.append(GroceryItem(itemNumber: 8))
     }
+    
+    func addItem(item : GroceryItem) {
+        allItems.append(item)
+    }
 }

@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct NavBarView: View {
-    @State private var random : Int = 0
-    @EnvironmentObject var screen : ScreenTracker
+//    @EnvironmentObject var screen : ScreenTracker
+    @State var screen : ScreenToShow = .addItem
     
     var body: some View {
         HStack {
             Spacer()
             
             // GROCERY LIST
-            Button(action: {screen.curScreen = .shoppingList} ) {
+            Button(action: {screen = .shoppingList} ) {
                 Image(systemName: "list.bullet.rectangle")
                     .foregroundStyle(.black)
                     .font(.title)
@@ -25,7 +25,7 @@ struct NavBarView: View {
             Spacer()
             
             // SEARCH ICON
-            Button(action: {screen.curScreen = .search} ) {
+            Button(action: {screen = .search} ) {
                 Image(systemName: "magnifyingglass")
                     .foregroundStyle(.black)
                     .font(.title)
@@ -34,7 +34,7 @@ struct NavBarView: View {
             Spacer()
             
             // CART ICON
-            Button(action: {screen.curScreen = .cart} ) {
+            Button(action: {screen = .cart} ) {
                 Image(systemName: "cart")
                     .foregroundStyle(.black)
                     .font(.title)

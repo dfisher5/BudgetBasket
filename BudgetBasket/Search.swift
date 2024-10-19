@@ -12,9 +12,17 @@ struct Store : Hashable {
     var price: Double = 0.0
     var temporaryPrice: Bool = false
     var priceGoodThrough: String = ""
+    
     init(storeName: String, price: Double) {
         self.storeName = storeName
         self.price = price
+    }
+    
+    init(storeName: String, price: Double, priceGoodThrough: String) {
+        self.storeName = storeName
+        self.price = price
+        self.priceGoodThrough = priceGoodThrough
+        self.temporaryPrice = true
     }
 }
 
@@ -65,5 +73,14 @@ class GroceryItem: Identifiable {
             let s2 = Store(storeName: "Trader Joe's", price: 0.89)
             stores = [s1, s2]
         }
+    }
+    
+    init(itemName: String, stores: [Store]) {
+        self.itemName = itemName
+        self.stores = stores
+    }
+    
+    func addStore(store: Store) {
+        stores.append(store)
     }
 }

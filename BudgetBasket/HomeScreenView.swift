@@ -13,30 +13,55 @@ enum ScreenToShow {
     case cart
     case addItem
 }
- 
-class ScreenTracker : ObservableObject {
-    @Published var curScreen : ScreenToShow = .shoppingList
-}
 
 struct HomeScreenView: View {
-    @StateObject var screen = ScreenTracker()
+    @State var screen : ScreenToShow = .shoppingList
     var body: some View {
         GeometryReader { geo in
             VStack {
                 VStack {
-                    if (screen.curScreen == .shoppingList) {
+                    if (screen == .shoppingList) {
                         GroceryListView()
                     }
-                    else if (screen.curScreen == .search) {
+                    else if (screen == .search) {
                         SearchView()
-                    }
-                    else if (screen.curScreen == .addItem) {
-                        AddItemView()
                     }
                 }
                 .frame(width: geo.size.width, height: geo.size.height - 50)
                 
-                NavBarView()
+                
+                // NAV BAR
+                HStack {
+                    Spacer()
+                    
+                    // GROCERY LIST
+                    Button(action: {screen = .shoppingList} ) {
+                        Image(systemName: "list.bullet.rectangle")
+                            .foregroundStyle(.black)
+                            .font(.title)
+                    }
+                    
+                    Spacer()
+                    
+                    // SEARCH ICON
+                    Button(action: {screen = .search} ) {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundStyle(.black)
+                            .font(.title)
+                    }
+                    
+                    Spacer()
+                    
+                    // CART ICON
+                    Button(action: {screen = .cart} ) {
+                        Image(systemName: "cart")
+                            .foregroundStyle(.black)
+                            .font(.title)
+                    }
+                    Spacer()
+                }
+                .frame(width: UIScreen.main.bounds.width, height: 75)
+                .background(Color.gray.opacity(0.3))
                 
             }
         }

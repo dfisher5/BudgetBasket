@@ -17,6 +17,7 @@ struct AddItemView: View {
     @State private var itemAdded : Bool = false
     let storeOptions : [String] = ["Hannaford", "Trader Joes", "Shaws", "City Market"]
     let tempPriceOptions : [Bool] = [true, false]
+    @ObservedObject var items : ItemStore
     
     private var price : Double { Double(itemPriceStr) ?? 0.0}
     
@@ -26,6 +27,19 @@ struct AddItemView: View {
             formatter.numberStyle = .decimal
             return formatter
         }()
+    
+    // HELPER FUNC TO ADD ITEM
+    func addItem() {
+        if (tempPrice) {
+            let storeToAdd : [Store] = [Store(storeName: store, price: price, priceGoodThrough: DateFormatter().string(from: date))]
+            items.addItem(item: GroceryItem(itemName: itemName, stores: storeToAdd))
+        }
+        else {
+            let storeToAdd : [Store] = [Store(storeName: store, price: price)]
+            items.addItem(item: GroceryItem(itemName: itemName, stores: storeToAdd))
+        }
+    }
+    
     
     var body: some View {
         
@@ -143,7 +157,7 @@ struct AddItemView: View {
                 
                 // ADD BUTTON
                 VStack {
-                    Button(action : {itemAdded = true}) {
+                    Button(action : {addItem()}) {
                         Text("Add Item")
                             .frame(width: UIScreen.main.bounds.width - 40, height: 50)
                             .background(.blue)
@@ -158,5 +172,5 @@ struct AddItemView: View {
 }
 
 #Preview {
-    AddItemView()
+    AddItemView(items: ItemStore())
 }
