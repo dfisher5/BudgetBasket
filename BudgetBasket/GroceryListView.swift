@@ -10,28 +10,15 @@ import SwiftUI
 struct GroceryListView: View {
     @State private var itemToAdd: String = ""
     @State private var groceryList: [String] = []
-    @State private var listDisplay: String = ""
-    //@State private var strings: [String] = []
-    //var items: FetchedResults<Item>
-    //@State private var items:
+    //@State private var listDisplay: String = ""
     
     func addToList() {
         groceryList.append(itemToAdd)
-        listDisplay += itemToAdd
-        listDisplay += "\n"
-        listDisplay += "\n"
+        //listDisplay += itemToAdd
+        //listDisplay += "\n"
+        //listDisplay += "\n"
         //let newItem = NSSortDescriptor(key: itemToAdd, ascending: true)
         //items.nsSortDescriptors.append(newItem)
-    }
-    
-    func removeFromList() {
-        //groceryList.removeAll(where: { $0 == })
-    }
-    
-    func printList() {
-        for item in groceryList {
-            listDisplay += item
-        }
     }
 
     var body: some View {
@@ -74,9 +61,9 @@ struct GroceryListView: View {
                     }
                 }
             }
-            .onChange(of: groceryList) { newValues in
+            .onChange(of: groceryList) { updatedList in
                 if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("groceryList.plist") {
-                    if let encodedData = try? PropertyListEncoder().encode(newValues) {
+                    if let encodedData = try? PropertyListEncoder().encode(updatedList) {
                         try? encodedData.write(to: url, options: .atomic)
                     }
                 }
