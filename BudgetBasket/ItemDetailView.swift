@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ItemDetailView: View {
-    @StateObject var itemStore = ItemStore()
+    @EnvironmentObject var itemStore: ItemStore
     var itemName: String
     
     var body: some View {

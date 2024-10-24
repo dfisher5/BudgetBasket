@@ -24,7 +24,7 @@ struct SearchView: View {
                 List {
                     ForEach(searchResults, id: \.self) { item in
                         NavigationLink {
-                            ItemDetailView(itemName: item)
+                            ItemDetailView(itemName: item).environmentObject(itemStore)
                         } label: {
                             Text(item)
                         }
