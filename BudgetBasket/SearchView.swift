@@ -12,7 +12,7 @@ struct SearchView: View {
 
     var body: some View {
         NavigationStack {
-            NavigationLink(destination: AddItemView(items: itemStore)) {
+            NavigationLink(destination: AddItemView().environmentObject(itemStore)) {
                     Text("Add item")
                     .padding(.horizontal, 100)
                     .padding(.vertical, 10)

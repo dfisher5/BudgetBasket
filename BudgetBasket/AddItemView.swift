@@ -17,7 +17,9 @@ struct AddItemView: View {
     @State private var itemAdded : Bool = false
     let storeOptions : [String] = ["Hannaford", "Trader Joes", "Shaws", "City Market"]
     let tempPriceOptions : [Bool] = [true, false]
-    @ObservedObject var items : ItemStore
+
+    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var items : ItemStore
     
     private var price : Double { Double(itemPriceStr) ?? 0.0}
     
@@ -38,6 +40,8 @@ struct AddItemView: View {
             let storeToAdd : [Store] = [Store(storeName: store, price: price)]
             items.addItem(item: GroceryItem(itemName: itemName, stores: storeToAdd))
         }
+        // CLOSE VIEW
+        dismiss()
     }
     
     
@@ -172,5 +176,5 @@ struct AddItemView: View {
 }
 
 #Preview {
-    AddItemView(items: ItemStore())
+    AddItemView().environmentObject(ItemStore())
 }
