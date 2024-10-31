@@ -15,14 +15,9 @@ struct GroceryListView: View {
     @StateObject var itemStore = ItemStore()
     @State private var searching: Bool = false
     @State private var editing: Bool = false
-    //@State private var currentView: List
     
     func addToList() {
         groceryList.append(itemToAdd)
-    }
-    
-    func editList(){
-        
     }
     
     var allItemNames: [String] {
@@ -39,46 +34,8 @@ struct GroceryListView: View {
 
     var body: some View {
         VStack() {
-           // HStack {
-              //  Text("Grocery List").font(.largeTitle).padding(.leading, 25)
-               // Spacer()
-            //}.padding(.top, 25)
-           
-            //VStack(spacing: 30) {
-                //TextField("Item Name", text: $itemToAdd).padding(.trailing, 30).padding(.leading, 30).textFieldStyle(.roundedBorder).textInputAutocapitalization(.never)
-                //Button("Add Item") {
-                    //addToList() }.padding(.horizontal, 100)
-                    //.padding(.vertical, 10)
-                    //.background(Color.blue)
-                    //.foregroundColor(.white)
-                    //.cornerRadius(10)
-                    //.font(.title3)
-                //VStack() {
-                    //HStack() {
-                        //Text(listDisplay).padding(.trailing, 30).padding(.leading, 30)
-                        //Spacer()
-                    //}
-                //}
-                //my original code
-                //List {
-                    //ForEach(groceryList, id: \.self) { string in Text(string) .swipeActions(edge: .trailing) {
-                            //Button(role: .destructive) {
-                                //groceryList.removeAll(where: { $0 == string })
-                            //} label: {
-                                //Label("Delete", systemImage: "trash")
-                            //}
-                        //}
-                    //}
-                //}
             NavigationStack {
                 Toggle("Edit Mode", isOn: $editing) .padding()
-                //Button("Edit List") {
-                //editList() }.padding(.horizontal, 100)
-                //.padding(.vertical, 10)
-                //.background(Color.blue)
-                //.foregroundColor(.white)
-                //.cornerRadius(10)
-                //.font(.title3)
                 if editing {
                     List {
                         ForEach(groceryList, id: \.self) { string in Text(string) .swipeActions(edge: .trailing) {
@@ -127,21 +84,6 @@ struct GroceryListView: View {
                 if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("groceryList.plist") {
                     if let encodedData = try? PropertyListEncoder().encode(updatedList) {
                         try? encodedData.write(to: url, options: .atomic)
-                    }
-                }
-            }
-            .onChange(of: editing) {
-                if editing == true {
-                    editList()
-                }
-                List {
-                    ForEach(groceryList, id: \.self) { string in Text(string) .swipeActions(edge: .trailing) {
-                            Button(role: .destructive) {
-                                groceryList.removeAll(where: { $0 == string })
-                            } label: {
-                                Label("Delete", systemImage: "trash")
-                            }
-                        }
                     }
                 }
             }
