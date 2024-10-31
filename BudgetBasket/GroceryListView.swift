@@ -11,6 +11,7 @@ struct GroceryListView: View {
     @State private var itemToAdd: String = ""
     @State private var groceryList: [String] = []
     //@State private var listDisplay: String = ""
+    @ObservedObject var items : ItemStore
     
     func addToList() {
         groceryList.append(itemToAdd)
@@ -73,5 +74,5 @@ struct GroceryListView: View {
 }
 
 #Preview {
-    GroceryListView()
+    GroceryListView(items: ItemStore())
 }
