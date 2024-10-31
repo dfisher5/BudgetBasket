@@ -31,8 +31,9 @@ struct SearchView: View {
                     }
                 }.searchable(text: $searchText)
                 .navigationTitle("Search Items")
-            }
-        }
+            
+        }.autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+    }
     
     var allItemNames: [String] {
         itemStore.allItems.map { $0.itemName }
@@ -42,7 +43,7 @@ struct SearchView: View {
         if searchText.isEmpty {
             return allItemNames
         } else {
-            return allItemNames.filter { $0.contains(searchText) }
+            return allItemNames.filter { $0.lowercased().contains(searchText) }
         }
     }
 }
