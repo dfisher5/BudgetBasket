@@ -21,7 +21,7 @@ struct HomeScreenView: View {
             VStack {
                 VStack {
                     if (screen == .shoppingList) {
-                        GroceryListView(items: ItemStore())
+                        GroceryListView()
                     }
                     else if (screen == .search) {
                         SearchView()
