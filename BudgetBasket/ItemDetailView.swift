@@ -20,7 +20,7 @@ struct ItemDetailView: View {
                                 StoreView(store: store)
                             }
                         }
-                        NavigationLink(destination: EditItemView().environmentObject(itemStore)) {
+                        NavigationLink(destination: EditItemView(passedItemName: itemName).environmentObject(itemStore)) {
                             Text("Edit item")
                                 .padding(.horizontal, 100)
                                 .padding(.vertical, 10)

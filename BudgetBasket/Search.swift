@@ -34,9 +34,8 @@ class GroceryItem: Identifiable {
     init(itemNumber: Int) {
         if itemNumber == 1 {
             itemName = "Plain bagels"
-            let s1 = Store(storeName: "Hannaford", price: 3.59)
-            let s2 = Store(storeName: "Trader Joe's", price: 2.49)
-            stores = [s1, s2]
+            let s1 = Store(storeName: "Trader Joe's", price: 2.49)
+            stores = [s1]
         } else if itemNumber == 2 {
             itemName = "Peanut butter"
             let s1 = Store(storeName: "Hannaford", price: 2.39)
