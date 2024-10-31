@@ -9,12 +9,12 @@ import SwiftUI
 
 struct GroceryListView: View {
     @State private var itemToAdd: String = ""
-    @State private var selectedSuggestion: String?
     @State private var defaultView: [String] = []
     @State private var groceryList: [String] = []
     //@ObservedObject var items : ItemStore
     @StateObject var itemStore = ItemStore()
     @State private var searching: Bool = false
+    @State private var editing: Bool = false
     //@State private var currentView: List
     
     func addToList() {
@@ -29,13 +29,13 @@ struct GroceryListView: View {
         itemStore.allItems.map { $0.itemName }
     }
     
-    var searchResults: [String] {
-        if itemToAdd.isEmpty {
-            return groceryList
-        } else {
-            return allItemNames.filter { $0.lowercased().contains(itemToAdd) }
-        }
-    }
+   // var searchResults: [String] {
+        //if itemToAdd.isEmpty {
+            //return groceryList
+        //} else {
+            //return allItemNames.filter { $0.lowercased().contains(itemToAdd) }
+        //}
+    //}
 
     var body: some View {
         VStack() {
@@ -71,13 +71,26 @@ struct GroceryListView: View {
                     //}
                 //}
             NavigationStack {
-                Button("Edit List") {
-                    editList() }.padding(.horizontal, 100)
-                    .padding(.vertical, 10)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    .font(.title3)
+                Toggle("Edit Mode", isOn: $editing) .padding()
+                //Button("Edit List") {
+                //editList() }.padding(.horizontal, 100)
+                //.padding(.vertical, 10)
+                //.background(Color.blue)
+                //.foregroundColor(.white)
+                //.cornerRadius(10)
+                //.font(.title3)
+                if editing {
+                    List {
+                        ForEach(groceryList, id: \.self) { string in Text(string) .swipeActions(edge: .trailing) {
+                            Button(role: .destructive) {
+                                groceryList.removeAll(where: { $0 == string })
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        }
+                        }
+                    }
+                } else {
                     List {
                         ForEach(groceryList, id: \.self) { item in
                             NavigationLink {
@@ -87,10 +100,9 @@ struct GroceryListView: View {
                             }
                         }
                     }.searchable(text: $itemToAdd) {
-                        ForEach(allItemNames.filter { $0.contains(itemToAdd) }, id: \.self) { suggestion in
+                        ForEach(allItemNames.filter { $0.lowercased().contains(itemToAdd) }, id: \.self) { suggestion in
                             Button {
                                 itemToAdd = suggestion
-                                selectedSuggestion = suggestion
                                 addToList()
                                 itemToAdd = ""
                             } label: {
@@ -98,8 +110,9 @@ struct GroceryListView: View {
                             }
                         }
                     }.textInputAutocapitalization(.never)
-                    .navigationTitle("Grocery List")
+                        .navigationTitle("Grocery List")
                 }
+            }
             }.padding()
             .onAppear() {
                 if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("groceryList.plist") {
@@ -114,6 +127,21 @@ struct GroceryListView: View {
                 if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("groceryList.plist") {
                     if let encodedData = try? PropertyListEncoder().encode(updatedList) {
                         try? encodedData.write(to: url, options: .atomic)
+                    }
+                }
+            }
+            .onChange(of: editing) {
+                if editing == true {
+                    editList()
+                }
+                List {
+                    ForEach(groceryList, id: \.self) { string in Text(string) .swipeActions(edge: .trailing) {
+                            Button(role: .destructive) {
+                                groceryList.removeAll(where: { $0 == string })
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        }
                     }
                 }
             }
