@@ -5,22 +5,36 @@ struct ItemDetailView: View {
     var itemName: String
     
     var body: some View {
-        if let item = itemToDisplay {
+        NavigationView {
             VStack {
-                Text("\(item.itemName)")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding(.top, 20)
-                    .frame(alignment: .leading)
-                Spacer()
-                List {
-                    ForEach(item.stores, id: \.self) { store in
-                        StoreView(store: store)
+                if let item = itemToDisplay {
+                    VStack {
+                        Text("\(item.itemName)")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .padding(.top, 20)
+                            .frame(alignment: .leading)
+                        Spacer()
+                        List {
+                            ForEach(item.stores, id: \.self) { store in
+                                StoreView(store: store)
+                            }
+                        }
+                        NavigationLink(destination: EditItemView().environmentObject(itemStore)) {
+                            Text("Edit item")
+                                .padding(.horizontal, 100)
+                                .padding(.vertical, 10)
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                                .font(.title3)
+                        }
+                        .padding(.top, 10)
                     }
+                } else {
+                    Text("Item not found")
                 }
             }
-        } else {
-            Text("Item not found")
         }
     }
     
@@ -45,5 +59,5 @@ struct StoreView: View {
 }
 
 #Preview {
-    ItemDetailView(itemName: "Plain bagels")
+    ItemDetailView(itemName: "Plain bagels").environmentObject(ItemStore())
 }
