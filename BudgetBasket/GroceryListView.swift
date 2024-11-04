@@ -15,6 +15,7 @@ struct GroceryListView: View {
     @StateObject var itemStore = ItemStore()
     @State private var searching: Bool = false
     @State private var editing: Bool = false
+    //@State private var quantity
     
     func addToList() {
         groceryList.append(itemToAdd)
@@ -31,6 +32,14 @@ struct GroceryListView: View {
             //return allItemNames.filter { $0.lowercased().contains(itemToAdd) }
         //}
     //}
+    
+    func increaseQuantity(){
+        
+    }
+    
+    func decreaseQuantity(){
+        
+    }
 
     var body: some View {
         VStack() {
@@ -39,12 +48,22 @@ struct GroceryListView: View {
                 if editing {
                     List {
                         ForEach(groceryList, id: \.self) { string in Text(string) .swipeActions(edge: .trailing) {
-                            Button(role: .destructive) {
-                                groceryList.removeAll(where: { $0 == string })
-                            } label: {
-                                Label("Delete", systemImage: "trash")
+                                Button(role: .destructive){
+                                    groceryList.removeAll(where: { $0 == string })
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                                Button{
+                                    //implement increaseQuantity()
+                                } label: {
+                                    Label("IncreaseQuantity", systemImage: "plus")
+                                }
+                                Button{
+                                    //implement decreaseQuantity()
+                                } label: {
+                                    Label("DecreaseQuantity", systemImage: "minus")
+                                }
                             }
-                        }
                         }
                     }
                 } else {
