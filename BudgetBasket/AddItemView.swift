@@ -15,7 +15,7 @@ struct AddItemView: View {
     @State private var tempPrice : Bool = false
     @State private var date : Date = Date()
     @State private var itemAdded : Bool = false
-    let storeOptions : [String] = ["Hannaford", "Trader Joes", "Shaws", "City Market"]
+    let storeOptions : [String] = ["Hannaford", "Trader Joes", "Shaws", "Price Chopper"]
     let tempPriceOptions : [Bool] = [true, false]
 
     @Environment(\.dismiss) var dismiss

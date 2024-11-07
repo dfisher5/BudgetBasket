@@ -21,12 +21,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct BudgetBasketApp: App {
 //    let persistenceController = PersistenceController.shared
     
-//    init() {
-//        // Use Firebase library to configure APIs
-//        FirebaseApp.configure()
-//    }
-    
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    init() {
+        // Use Firebase library to configure APIs
+        FirebaseApp.configure()
+    }
     
     var body: some Scene {
         WindowGroup {
