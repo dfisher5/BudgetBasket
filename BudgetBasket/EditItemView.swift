@@ -16,7 +16,7 @@ struct EditItemView: View {
     @State private var tempPrice : Bool = false
     @State private var date : Date = Date()
     @State private var itemAdded : Bool = false
-    let storeOptions : [String] = ["Hannaford", "Trader Joes", "Shaws", "City Market"]
+    let storeOptions : [String] = ["Hannaford", "Trader Joe's", "Shaws", "City Market"]
     let tempPriceOptions : [Bool] = [true, false]
     
     @Environment(\.dismiss) var dismiss
@@ -73,7 +73,7 @@ struct EditItemView: View {
                                     Text("Price").font(.title3)
                                     Spacer()
                                 }
-                                TextField("Required", text: $itemPriceStr).padding(.trailing, 30)
+                                TextField(String(format: "%.2f", passedItem.stores.first(where: { $0.storeName == store })?.price ?? 0.00), text: $itemPriceStr).padding(.trailing, 30)
                                     .decimalNumberOnly($itemPriceStr)
                             }
                             .textFieldStyle(.roundedBorder)
