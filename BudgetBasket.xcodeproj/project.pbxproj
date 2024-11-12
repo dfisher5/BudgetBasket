@@ -19,10 +19,10 @@
 		1C77D85D2CBF521B0067462B /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C77D85C2CBF521B0067462B /* Search.swift */; };
 		1C77D8632CBF64550067462B /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C77D8622CBF64550067462B /* ItemDetailView.swift */; };
 		1C8D27D32CBE0C93001E857A /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8D27D22CBE0C93001E857A /* SearchView.swift */; };
+		1CC53EE42CE40A13009AEDB6 /* ItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC53EE32CE40A13009AEDB6 /* ItemStore.swift */; };
 		1CCAEADE2CD3D52000853131 /* EditItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCAEADD2CD3D52000853131 /* EditItemView.swift */; };
 		2262BE822CC083B1002F0FC7 /* GroceryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2262BE812CC083B1002F0FC7 /* GroceryListView.swift */; };
 		B48FBC5D2CC1A86A00C70AEB /* DecimalNumberViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48FBC5C2CC1A86A00C70AEB /* DecimalNumberViewModifier.swift */; };
-		B48FBC5F2CC1A88C00C70AEB /* ItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48FBC5E2CC1A88C00C70AEB /* ItemStore.swift */; };
 		B48FBC612CC29CC300C70AEB /* NavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48FBC602CC29CC300C70AEB /* NavBarView.swift */; };
 		B48FBC652CC2ADC600C70AEB /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48FBC642CC2ADC500C70AEB /* HomeScreenView.swift */; };
 		B4967D0D2CBD66EC000103A6 /* AddItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4967D0C2CBD66EC000103A6 /* AddItemView.swift */; };
@@ -61,10 +61,10 @@
 		1C77D85C2CBF521B0067462B /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		1C77D8622CBF64550067462B /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		1C8D27D22CBE0C93001E857A /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		1CC53EE32CE40A13009AEDB6 /* ItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemStore.swift; sourceTree = "<group>"; };
 		1CCAEADD2CD3D52000853131 /* EditItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemView.swift; sourceTree = "<group>"; };
 		2262BE812CC083B1002F0FC7 /* GroceryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryListView.swift; sourceTree = "<group>"; };
 		B48FBC5C2CC1A86A00C70AEB /* DecimalNumberViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalNumberViewModifier.swift; sourceTree = "<group>"; };
-		B48FBC5E2CC1A88C00C70AEB /* ItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemStore.swift; sourceTree = "<group>"; };
 		B48FBC602CC29CC300C70AEB /* NavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarView.swift; sourceTree = "<group>"; };
 		B48FBC642CC2ADC500C70AEB /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
 		B4967D0C2CBD66EC000103A6 /* AddItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemView.swift; sourceTree = "<group>"; };
@@ -122,7 +122,7 @@
 				1C0863DF2CA330380084AEB0 /* Assets.xcassets */,
 				1C0863DB2CA330340084AEB0 /* BudgetBasketApp.swift */,
 				B48FBC5C2CC1A86A00C70AEB /* DecimalNumberViewModifier.swift */,
-				B48FBC5E2CC1A88C00C70AEB /* ItemStore.swift */,
+				1CC53EE32CE40A13009AEDB6 /* ItemStore.swift */,
 				1C0863E42CA330380084AEB0 /* Persistence.swift */,
 				1C77D85C2CBF521B0067462B /* Search.swift */,
 				1C0863E12CA330380084AEB0 /* Preview Content */,
@@ -301,7 +301,6 @@
 				1C0863E52CA330380084AEB0 /* Persistence.swift in Sources */,
 				B48FBC5D2CC1A86A00C70AEB /* DecimalNumberViewModifier.swift in Sources */,
 				1CCAEADE2CD3D52000853131 /* EditItemView.swift in Sources */,
-				B48FBC5F2CC1A88C00C70AEB /* ItemStore.swift in Sources */,
 				1C0863DE2CA330340084AEB0 /* ContentView.swift in Sources */,
 				1C0863E82CA330380084AEB0 /* BudgetBasket.xcdatamodeld in Sources */,
 				B48FBC652CC2ADC600C70AEB /* HomeScreenView.swift in Sources */,
@@ -311,6 +310,7 @@
 				1C8D27D32CBE0C93001E857A /* SearchView.swift in Sources */,
 				B48FBC612CC29CC300C70AEB /* NavBarView.swift in Sources */,
 				B4967D0D2CBD66EC000103A6 /* AddItemView.swift in Sources */,
+				1CC53EE42CE40A13009AEDB6 /* ItemStore.swift in Sources */,
 				1C77D85D2CBF521B0067462B /* Search.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
