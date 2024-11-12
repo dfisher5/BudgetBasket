@@ -4,9 +4,7 @@
 //
 //  Created by Delaney Fisher on 10/15/24.
 //
-
 import Foundation
-
 class ItemStore: ObservableObject {
     @Published var allItems: [GroceryItem]
     
@@ -20,5 +18,9 @@ class ItemStore: ObservableObject {
         allItems.append(GroceryItem(itemNumber: 6))
         allItems.append(GroceryItem(itemNumber: 7))
         allItems.append(GroceryItem(itemNumber: 8))
+    }
+    
+    func addItem(item : GroceryItem) {
+        allItems.append(item)
     }
 }
