@@ -19,16 +19,8 @@ struct HomeScreenView: View {
     @State var screen : ScreenToShow = .shoppingList
     @Environment(\.scenePhase) var scenePhase
     
-    func updateData() {
-        if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("groceryList.plist") {
-            if let encodedData = try? PropertyListEncoder().encode(groceryList.itemsWithQuantities) {
-                try? encodedData.write(to: url, options: .atomic)
-            }
-        }
-    }
-    
     @discardableResult
-    func saveData() -> Bool {
+    func updateData() -> Bool {
         do {
             let encoder = JSONEncoder()
             let data = try encoder.encode(groceryList.itemsWithQuantities)
@@ -91,7 +83,7 @@ struct HomeScreenView: View {
             }
         }.environmentObject(groceryList)
         .onChange(of: scenePhase) {
-            saveData()
+            updateData()
         }
     }
 }
