@@ -18,7 +18,7 @@ struct QuantityEditView: View {
     }
     
     func decreaseVal(){
-        if itemQuantity > 0 {
+        if itemQuantity > 1 {
             itemQuantity -= 1
         }
     }
