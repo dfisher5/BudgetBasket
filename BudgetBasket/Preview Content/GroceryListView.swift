@@ -9,36 +9,64 @@ import SwiftUI
 
 struct GroceryListView: View {
     @State private var itemToAdd: String = ""
-    @State private var defaultView: [String] = []
-    @State private var groceryList: [String] = []
-    //@ObservedObject var items : ItemStore
+    //@State private var groceryList: [String] = []
     @StateObject var itemStore = ItemStore()
-    @State private var searching: Bool = false
     @State private var editing: Bool = false
-    //@State private var quantity
+    @State private var itemIndex: Int = 0
+    @State private var fun: Int = 18
+    @EnvironmentObject var groceryList: GroceryListWithQuantities
+    //@StateObject private var sharedData = SharedData()
+    
+    //@EnvironmentObject var itemsWithQuantities: [itemQuantity]
+    //@State var tempItems: [itemQuantity] = []
+    
+    //@State private var tempItem: itemQuantity?
     
     func addToList() {
-        groceryList.append(itemToAdd)
+        //groceryList.append(itemToAdd)
+        //groceryList.itemsWithQuantities.append(itemQuantity(itemName: itemToAdd, quantity: 1))
+        groceryList.itemsWithQuantities.append(GroceryListWithQuantities.itemQuantity(itemName: itemToAdd, quantity: 1))
     }
     
     var allItemNames: [String] {
         itemStore.allItems.map { $0.itemName }
     }
     
-   // var searchResults: [String] {
-        //if itemToAdd.isEmpty {
-            //return groceryList
-        //} else {
-            //return allItemNames.filter { $0.lowercased().contains(itemToAdd) }
+    //struct itemQuantity: Codable, Identifiable, Equatable, CustomStringConvertible {
+        //var id = UUID()
+        //var itemName: String
+        //var quantity: Int
+        
+        //mutating func increaseQuantity(){
+            //quantity += 1
+        //}
+        
+        //mutating func decreaseQuantity(){
+            //if quantity > 0 {
+                //quantity -= 1
+            //}
+        //}
+        
+        //static func == (one: itemQuantity, two: itemQuantity) -> Bool {
+                //one.itemName == two.itemName
+        //}
+        
+        //var description: String {
+            //return "\(quantity) \(itemName)"
         //}
     //}
     
-    func increaseQuantity(){
-        
-    }
+    //func findItem(itemToFind: String) -> itemQuantity?{
+        //for item in itemsWithQuantities{
+            //if item.itemName == itemToFind{
+                //return item
+            //}
+        //}
+        //return nil
+    //}
     
-    func decreaseQuantity(){
-        
+    func findItem(itemToFind: GroceryListWithQuantities.itemQuantity) -> Int?{
+        return groceryList.itemsWithQuantities.firstIndex(where: {$0.id == itemToFind.id})
     }
 
     var body: some View {
@@ -47,32 +75,31 @@ struct GroceryListView: View {
                 Toggle("Edit Mode", isOn: $editing) .padding()
                 if editing {
                     List {
-                        ForEach(groceryList, id: \.self) { string in Text(string) .swipeActions(edge: .trailing) {
-                                Button(role: .destructive){
-                                    groceryList.removeAll(where: { $0 == string })
+                        ForEach(groceryList.itemsWithQuantities, id: \.id) { item in
+                            HStack {
+                                //Text("\(item)")
+                                NavigationLink {
+                                    QuantityEditView(itemQuantity: item.quantity, itemName: item.itemName)
                                 } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                                Button{
-                                    //implement increaseQuantity()
-                                } label: {
-                                    Label("IncreaseQuantity", systemImage: "plus")
-                                }
-                                Button{
-                                    //implement decreaseQuantity()
-                                } label: {
-                                    Label("DecreaseQuantity", systemImage: "minus")
+                                    Text("\(item.quantity)" + " " + item.itemName)
+                                }.swipeActions(edge: .trailing){
+                                    Button(role: .destructive){
+                                        groceryList.itemsWithQuantities.removeAll(where: { $0 == item})
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
                                 }
                             }
                         }
                     }
                 } else {
                     List {
-                        ForEach(groceryList, id: \.self) { item in
+                        ForEach(groceryList.itemsWithQuantities, id: \.id) { item in
                             NavigationLink {
-                                ItemDetailView(itemName: item).environmentObject(itemStore)
+                                ItemDetailView(itemName: item.itemName).environmentObject(itemStore)
                             } label: {
-                                Text(item)
+                                //Text("\(item.quantity)" + " " + "\(item.itemName)")
+                                Text("\(item.quantity)" + " " + item.itemName)
                             }
                         }
                     }.searchable(text: $itemToAdd) {
@@ -88,24 +115,25 @@ struct GroceryListView: View {
                     }.textInputAutocapitalization(.never)
                         .navigationTitle("Grocery List")
                 }
-            }
+              }
             }.padding()
             .onAppear() {
                 if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("groceryList.plist") {
                     if let data = try? Data(contentsOf: url) {
-                        if let decodedValues = try? PropertyListDecoder().decode([String].self, from: data) {
-                            groceryList = decodedValues
+                        if let decodedValues = try? PropertyListDecoder().decode([GroceryListWithQuantities.itemQuantity].self, from: data) {
+                            groceryList.itemsWithQuantities = decodedValues
                         }
                     }
                 }
             }
-            .onChange(of: groceryList) { updatedList in
+            .onChange(of: groceryList.itemsWithQuantities) { updatedList in
                 if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("groceryList.plist") {
                     if let encodedData = try? PropertyListEncoder().encode(updatedList) {
                         try? encodedData.write(to: url, options: .atomic)
                     }
                 }
             }
+            
     }
 
 }
@@ -116,6 +144,6 @@ struct GroceryListView: View {
 
 struct GroceryView_Previews: PreviewProvider {
     static var previews: some View {
-        GroceryListView()
+        GroceryListView().environmentObject(GroceryListWithQuantities())
     }
 }

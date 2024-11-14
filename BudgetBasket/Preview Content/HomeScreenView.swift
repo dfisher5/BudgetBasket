@@ -15,6 +15,7 @@ enum ScreenToShow {
 }
 
 struct HomeScreenView: View {
+    @StateObject private var groceryList = GroceryListWithQuantities()
     @State var screen : ScreenToShow = .shoppingList
     var body: some View {
         GeometryReader { geo in
@@ -64,7 +65,7 @@ struct HomeScreenView: View {
                 .background(Color.gray.opacity(0.3))
                 
             }
-        }
+        }.environmentObject(groceryList)
     }
 }
 
