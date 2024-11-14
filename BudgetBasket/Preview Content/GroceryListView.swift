@@ -35,7 +35,7 @@ struct GroceryListView: View {
     func loadData() {
         //if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("groceryList.plist") {
                         //if let data = try? Data(contentsOf: url) {
-                            //if let decodedGroceryList = try? PropertyListDecoder().decode(GroceryListWithQuantities.self, from: data) {
+                            //if let decodedGroceryList = try?  PropertyListDecoder().decode(GroceryListWithQuantities.self, from: data) {
                                 //groceryList = decodedGroceryList
                             //}
                         //}
@@ -69,7 +69,7 @@ struct GroceryListView: View {
         
         //static func == (one: itemQuantity, two: itemQuantity) -> Bool {
                 //one.itemName == two.itemName
-        //}
+        //} 
         
         //var description: String {
             //return "\(quantity) \(itemName)"
