@@ -17,6 +17,30 @@ enum ScreenToShow {
 struct HomeScreenView: View {
     @StateObject private var groceryList = GroceryListWithQuantities()
     @State var screen : ScreenToShow = .shoppingList
+    @Environment(\.scenePhase) var scenePhase
+    
+    func updateData() {
+        if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("groceryList.plist") {
+            if let encodedData = try? PropertyListEncoder().encode(groceryList.itemsWithQuantities) {
+                try? encodedData.write(to: url, options: .atomic)
+            }
+        }
+    }
+    
+    @discardableResult
+    func saveData() -> Bool {
+        do {
+            let encoder = JSONEncoder()
+            let data = try encoder.encode(groceryList.itemsWithQuantities)
+            try data.write(to: groceryList.groceryListURL, options: [.atomic])
+            print("saved data to \(groceryList.groceryListURL)")
+            return true
+        } catch let encodingError {
+            print("Error encoding allItems: \(encodingError)")
+            return false
+        }
+    }
+    
     var body: some View {
         GeometryReader { geo in
             VStack {
@@ -66,6 +90,9 @@ struct HomeScreenView: View {
                 
             }
         }.environmentObject(groceryList)
+        .onChange(of: scenePhase) {
+            saveData()
+        }
     }
 }
 

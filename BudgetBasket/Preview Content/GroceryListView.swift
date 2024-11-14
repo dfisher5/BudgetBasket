@@ -33,24 +33,31 @@ struct GroceryListView: View {
     }
     
     func loadData() {
-        //if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("groceryList.plist") {
-                        //if let data = try? Data(contentsOf: url) {
-                            //if let decodedGroceryList = try?  PropertyListDecoder().decode(GroceryListWithQuantities.self, from: data) {
-                                //groceryList = decodedGroceryList
-                            //}
-                        //}
-                    //}
-        if let data = UserDefaults.standard.data(forKey: "groceryList.itemsWithQuantities") {
-            if let decodedData = try? JSONDecoder().decode([GroceryListWithQuantities.itemQuantity].self, from: data) {
-                groceryList.itemsWithQuantities = decodedData
+        if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("groceryList.plist") {
+                if let data = try? Data(contentsOf: url){
+                    if let decodedGroceryList = try?  PropertyListDecoder().decode([GroceryListWithQuantities.itemQuantity].self, from: data) {
+                            groceryList.itemsWithQuantities = decodedGroceryList
+                        }
                     }
             }
+        //if let data = UserDefaults.standard.data(forKey: "groceryList.itemsWithQuantities") {
+            //if let decodedData = try? JSONDecoder().decode([GroceryListWithQuantities.itemQuantity].self, from: data) {
+                //groceryList.itemsWithQuantities = decodedData
+                    //}
+            //}
     }
     
     func updateData() {
-        if let encoded = try? JSONEncoder().encode(groceryList.itemsWithQuantities) {
-                    UserDefaults.standard.set(encoded, forKey: "groceryList.itemsWithQuantities")
-                }
+        print("hello")
+        if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("groceryList.plist") {
+            if let encodedData = try? PropertyListEncoder().encode(groceryList.itemsWithQuantities) {
+                print (url)
+                try? encodedData.write(to: url, options: .atomic)
+            }
+        }
+        //if let encoded = try? JSONEncoder().encode(groceryList.itemsWithQuantities) {
+                    //UserDefaults.standard.set(encoded, forKey: "groceryList.itemsWithQuantities")
+                //}
     }
     //struct itemQuantity: Codable, Identifiable, Equatable, CustomStringConvertible {
         //var id = UUID()
@@ -74,15 +81,6 @@ struct GroceryListView: View {
         //var description: String {
             //return "\(quantity) \(itemName)"
         //}
-    //}
-    
-    //func findItem(itemToFind: String) -> itemQuantity?{
-        //for item in itemsWithQuantities{
-            //if item.itemName == itemToFind{
-                //return item
-            //}
-        //}
-        //return nil
     //}
     
     func findItem(itemToFind: GroceryListWithQuantities.itemQuantity) -> Int?{
@@ -137,26 +135,29 @@ struct GroceryListView: View {
                 }
               }
             }.padding()
-            .onAppear() {
+            //.onAppear() {
                 //if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("groceryList.plist") {
                     //if let data = try? Data(contentsOf: url) {
-                        //if let decodedValues = try? PropertyListDecoder().decode([String].self, from: data) {
+                        //if let decodedValues = try? PropertyListDecoder().decode(GroceryListWithQuantities.self, from: data) {
                             //groceryList = decodedValues
                         //}
                     //}
                 //}
-                loadData()
+                //loadData()
                 
-            }
-            .onChange(of: groceryList.itemsWithQuantities) {
-                updateData()
+            //}
+            //.onDisappear(){
+                //updateData()
+            //}
+            //.onChange(of: groceryList.itemsWithQuantities) { //updatedList in
+                //updateData()
                 //updatedList in
                 //if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("groceryList.plist") {
-                    //if let encodedData = try? PropertyListEncoder().encode(updatedList) {
+                    //if let encodedData = try?  PropertyListEncoder().encode(groceryList) {
                         //try? encodedData.write(to: url, options: .atomic)
                     //}
                 //}
-            }
+            //}
             
     }
 
