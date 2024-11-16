@@ -7,7 +7,7 @@
 import SwiftUI
  
 struct SearchView: View {
-    @StateObject var itemStore = ItemStore()
+    @EnvironmentObject var itemStore : ItemStore
     @State private var searchText = ""
 
     var body: some View {
@@ -50,6 +50,6 @@ struct SearchView: View {
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView()
+        SearchView().environmentObject(ItemStore())
     }
 }

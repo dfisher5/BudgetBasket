@@ -18,6 +18,7 @@ struct HomeScreenView: View {
     @StateObject private var groceryList = GroceryListWithQuantities()
     @State var screen : ScreenToShow = .shoppingList
     @Environment(\.scenePhase) var scenePhase
+    @StateObject private var itemStore = ItemStore()
     
     @discardableResult
     func updateData() -> Bool {
@@ -38,13 +39,13 @@ struct HomeScreenView: View {
             VStack {
                 VStack {
                     if (screen == .shoppingList) {
-                        GroceryListView()
+                        GroceryListView().environmentObject(itemStore)
                     }
                     else if (screen == .search) {
-                        SearchView()
+                        SearchView().environmentObject(itemStore)
                     }
                     else if (screen == .cart) {
-                        CartView().environmentObject(ItemStore())
+                        CartView().environmentObject(itemStore)
                     }
                 }
                 .frame(width: geo.size.width, height: geo.size.height - 50)

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GroceryListView: View {
     @State private var itemToAdd: String = ""
-    @StateObject var itemStore = ItemStore()
+    @EnvironmentObject var itemStore : ItemStore
     @State private var editing: Bool = false
     @State private var itemIndex: Int = 0
     @State private var fun: Int = 18
@@ -84,6 +84,6 @@ struct GroceryListView: View {
 
 struct GroceryView_Previews: PreviewProvider {
     static var previews: some View {
-        GroceryListView().environmentObject(GroceryListWithQuantities())
+        GroceryListView().environmentObject(GroceryListWithQuantities()).environmentObject(ItemStore())
     }
 }
