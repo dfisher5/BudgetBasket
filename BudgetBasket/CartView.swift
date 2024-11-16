@@ -15,19 +15,25 @@ struct CartView: View {
     @State private var numberOfStores : String = "1 Store"
     
     let numberOfStoreStops : [String] = ["1 Store", "2 Stores", "3 Stores", "4 Stores"]
-    @EnvironmentObject var items : ItemStore
+    @EnvironmentObject var items : GroceryListWithQuantities
+    @EnvironmentObject var itemStore : ItemStore
     
     @State private var prices = [[Double]]()
     @State private var itemNames = [String]()
+    @State private var quantities = [String : Int]()
     
     private var intNumStores : Int { Int(numberOfStores.prefix(1)) ?? 1}
     
     func populateArrays() {
         // Go through each item in the list
-        for item in items.allItems {
+        for item in items.itemsWithQuantities {
             itemNames.append(item.itemName)
+            quantities[item.itemName] = item.quantity
+            var itemToDisplay: GroceryItem {
+                itemStore.allItems.first(where: { $0.itemName == item.itemName }) ?? GroceryItem(itemNumber: 1)
+            }
             var itemPrices : [Double] = [0, 0, 0, 0]
-            for curStore in item.stores {
+            for curStore in itemToDisplay.stores {
                 // Add prices
                 if (curStore.storeName == "Hannaford") {
                     itemPrices[0] = curStore.price
@@ -162,14 +168,26 @@ struct CartView: View {
         var prices = [Double]()
         for (key, value) in list {
             if (key == storeName) {
-                for (_, price) in value {
-                    prices.append(price)
+                for (name, price) in value {
+                    
+                    prices.append(price * Double(quantities[name]!))
                 }
             }
         }
         
         return prices
     }
+    
+//    func getQuantities(list: [String : [String : Double]], quantities: String, storeName: String) -> Int {
+//        var quants = [Int]()
+//        for (key, value) in list {
+//            if (key == storeName) {
+//                for (itemName, _) in value {
+//                    // Get the quantity for that item by finding the
+//                }
+//            }
+//        }
+//    }
     
     func getTotal(items: [Double]) -> Double {
         var total = 0.0
@@ -221,12 +239,12 @@ struct CartView: View {
                                 if (theseItems.count != 0) {
                                     Spacer()
                                     HStack {
-                                        Text("\(thisStore)").bold()
+                                        Text("\(thisStore)").font(.title3).bold()
                                         Spacer()
                                     }.padding(.leading, 15)
                                     ForEach(0..<theseItems.count, id: \.self) { i in
                                         HStack {
-                                            Text(String(format: "\(theseItems[i]) - $%.2f", thesePrices[i]))
+                                            Text(String(format: "\(quantities[theseItems[i]]!)x  \(theseItems[i]) - $%.2f", thesePrices[i]))
                                             Spacer()
                                         }.padding(.leading, 25)
                                     }
@@ -251,5 +269,5 @@ struct CartView: View {
 }
 
 #Preview {
-    CartView().environmentObject(ItemStore())
+    CartView().environmentObject(GroceryListWithQuantities()).environmentObject(ItemStore())
 }
