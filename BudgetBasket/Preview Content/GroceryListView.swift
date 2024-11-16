@@ -38,7 +38,7 @@ struct GroceryListView: View {
                                 NavigationLink {
                                     QuantityEditView(itemQuantity: item.quantity, itemName: item.itemName)
                                 } label: {
-                                    Text("\(item.quantity) ").opacity(0.6)
+                                    Text("\(item.quantity) ").opacity(0.5)
                                     Text("\(item.itemName)")
                                 }.swipeActions(edge: .trailing){
                                     Button(role: .destructive){
@@ -56,7 +56,7 @@ struct GroceryListView: View {
                             NavigationLink {
                                 ItemDetailView(itemName: item.itemName).environmentObject(itemStore)
                             } label: {
-                                Text("\(item.quantity) ").opacity(0.6)
+                                Text("\(item.quantity) ").opacity(0.5)
                                 Text("\(item.itemName)")
                             }
                         }

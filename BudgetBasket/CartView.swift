@@ -247,7 +247,7 @@ struct CartView: View {
                                         }.padding(.leading, 15)
                                         ForEach(0..<theseItems.count, id: \.self) { i in
                                             HStack {
-                                                Text("\(quantities[theseItems[i]]!) ").opacity(0.6)
+                                                Text("\(quantities[theseItems[i]]!) ").opacity(0.5)
                                                 Text(String(format: "\(theseItems[i]) - $%.2f", thesePrices[i]))
                                                 Spacer()
                                             }.padding(.leading, 25)
