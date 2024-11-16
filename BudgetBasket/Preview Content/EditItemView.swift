@@ -32,19 +32,23 @@ struct EditItemView: View {
     }()
     
     // HELPER FUNC TO ADD ITEM
-    func addItem() {
-        if (tempPrice) {
-            if (tempPrice) {
-                let storeToAdd : [Store] = [Store(storeName: store, price: price, priceGoodThrough: DateFormatter().string(from: date))]
-                items.addItem(item: GroceryItem(itemName: itemName, stores: storeToAdd))
+    func editItem() {
+        // Find the item to change prices of
+        for i in items.allItems.indices {
+            print(items.allItems[i].itemName)
+            print(passedItemName)
+            if (items.allItems[i].itemName == passedItemName) {
+                // Go through the stores and find the correct one
+                for j in items.allItems[i].stores.indices {
+                    if (items.allItems[i].stores[j].storeName == store) {
+                        items.allItems[i].stores[j].price = price
+                        print(items.allItems[i].stores[j].price)
+                    }
+                }
             }
-            else {
-                let storeToAdd : [Store] = [Store(storeName: store, price: price)]
-                items.addItem(item: GroceryItem(itemName: itemName, stores: storeToAdd))
-            }
-            // CLOSE VIEW
-            dismiss()
         }
+        // CLOSE VIEW
+        dismiss()
     }
         
         
@@ -150,7 +154,7 @@ struct EditItemView: View {
                             
                             // ADD BUTTON
                             VStack {
-                                Button(action : {addItem()}) {
+                                Button(action : {editItem()}) {
                                     Text("Save changes")
                                         .frame(width: UIScreen.main.bounds.width - 40, height: 50)
                                         .background(.blue)
