@@ -62,7 +62,9 @@ struct EditItemView: View {
                             HStack {
                                 Text("Edit Item").font(.title).padding(.leading, 25)
                                 Spacer()
-                            }.padding(.bottom, 25)
+                            }
+                                .padding(.bottom, 25)
+                                .padding(.top, 10)
                             Spacer()
                             
                             

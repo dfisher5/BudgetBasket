@@ -147,7 +147,6 @@ struct CartView: View {
         for (key, _) in list {
             stores.append(key)
         }
-        
         return stores
     }
     
@@ -206,7 +205,9 @@ struct CartView: View {
                 HStack {
                     Text("Shopping Plan").font(.title).padding(.leading, 25)
                     Spacer()
-                }.padding(.bottom, 25)
+                }
+                    .padding(.bottom, 25)
+                    .padding(.top, 10)
                 
                 // Picker
                 HStack {
@@ -232,27 +233,42 @@ struct CartView: View {
                         // Print list
                         ForEach(getStoreNames(list: splitUpList), id: \.self) { thisStore in
                             Spacer()
-                            VStack {
-                                var theseItems = getItemNames(list: splitUpList, storeName: thisStore)
-                                var thesePrices = getPrices(list: splitUpList, storeName: thisStore)
-                                var storeTotal = getTotal(items: thesePrices)
-                                if (theseItems.count != 0) {
-                                    Spacer()
-                                    HStack {
-                                        Text("\(thisStore)").font(.title3).bold()
+                            var theseItems = getItemNames(list: splitUpList, storeName: thisStore)
+                            var thesePrices = getPrices(list: splitUpList, storeName: thisStore)
+                            var storeTotal = getTotal(items: thesePrices)
+                            if (theseItems.count != 0) {
+                                VStack {
+                                    
+                                    if (theseItems.count != 0) {
                                         Spacer()
-                                    }.padding(.leading, 15)
-                                    ForEach(0..<theseItems.count, id: \.self) { i in
                                         HStack {
-                                            Text(String(format: "\(quantities[theseItems[i]]!)x  \(theseItems[i]) - $%.2f", thesePrices[i]))
+                                            Text("\(thisStore)").font(.title3).bold()
                                             Spacer()
-                                        }.padding(.leading, 25)
+                                        }.padding(.leading, 15)
+                                        ForEach(0..<theseItems.count, id: \.self) { i in
+                                            HStack {
+                                                Text("\(quantities[theseItems[i]]!) ").opacity(0.6)
+                                                Text(String(format: "\(theseItems[i]) - $%.2f", thesePrices[i]))
+                                                Spacer()
+                                            }.padding(.leading, 25)
+                                        }
+                                        HStack {
+                                            Text(String(format: "\(thisStore) Total - $%.2f", storeTotal)).underline()
+                                            Spacer()
+                                        }.padding(.leading, 35)
                                     }
-                                    HStack {
-                                        Text(String(format: "\(thisStore) Total - $%.2f", storeTotal)).underline()
-                                        Spacer()
-                                    }.padding(.leading, 35)
                                 }
+                                .frame(width: UIScreen.main.bounds.width - 40)
+                                .padding(.top, 5)
+                                .padding(.bottom, 15)
+                                .background(.gray.opacity(0.1))
+                                .cornerRadius(10.0)
+                            }
+                            else {
+                                HStack {
+                                    Text("No Items").font(.title3)
+                                    Spacer()
+                                }.padding(.leading, 40)
                             }
                         }
                     }

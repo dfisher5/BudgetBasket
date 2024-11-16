@@ -38,7 +38,8 @@ struct GroceryListView: View {
                                 NavigationLink {
                                     QuantityEditView(itemQuantity: item.quantity, itemName: item.itemName)
                                 } label: {
-                                    Text("\(item.quantity)" + " " + item.itemName)
+                                    Text("\(item.quantity) ").opacity(0.6)
+                                    Text("\(item.itemName)")
                                 }.swipeActions(edge: .trailing){
                                     Button(role: .destructive){
                                         groceryList.itemsWithQuantities.removeAll(where: { $0 == item})
@@ -55,7 +56,8 @@ struct GroceryListView: View {
                             NavigationLink {
                                 ItemDetailView(itemName: item.itemName).environmentObject(itemStore)
                             } label: {
-                                Text("\(item.quantity)" + " " + item.itemName)
+                                Text("\(item.quantity) ").opacity(0.6)
+                                Text("\(item.itemName)")
                             }
                         }
                     }.searchable(text: $itemToAdd) {
@@ -72,7 +74,7 @@ struct GroceryListView: View {
                         .navigationTitle("Grocery List")
                 }
               }
-            }.padding()
+        }
             
     }
 
