@@ -27,6 +27,9 @@ struct HomeScreenView: View {
                     else if (screen == .search) {
                         SearchView()
                     }
+                    else if (screen == .cart) {
+                        CartView().environmentObject(ItemStore())
+                    }
                 }
                 .frame(width: geo.size.width, height: geo.size.height - 50)
                 

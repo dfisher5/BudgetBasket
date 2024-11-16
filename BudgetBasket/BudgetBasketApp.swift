@@ -29,7 +29,7 @@ struct BudgetBasketApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView() {
-                HomeScreenView()
+                StartScreenView()
             }
         }
     }
