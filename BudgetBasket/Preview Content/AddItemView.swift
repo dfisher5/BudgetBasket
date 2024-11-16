@@ -15,7 +15,7 @@ struct AddItemView: View {
     @State private var tempPrice : Bool = false
     @State private var date : Date = Date()
     @State private var itemAdded : Bool = false
-    let storeOptions : [String] = ["Hannaford", "Trader Joes", "Shaws", "Price Chopper"]
+    let storeOptions : [String] = ["Hannaford", "Trader Joe's", "Shaw's", "Price Chopper"]
     let tempPriceOptions : [Bool] = [true, false]
 
     @Environment(\.dismiss) var dismiss
@@ -37,8 +37,15 @@ struct AddItemView: View {
             items.addItem(item: GroceryItem(itemName: itemName, stores: storeToAdd))
         }
         else {
-            let storeToAdd : [Store] = [Store(storeName: store, price: price)]
-            items.addItem(item: GroceryItem(itemName: itemName, stores: storeToAdd))
+            // Make an arrya of all stores with prices 0.00
+            var storesToAdd : [Store] = [Store(storeName: "Hannaford", price: 0.0), Store(storeName: "Trader Joe's", price: 0.0), Store(storeName: "Shaw's", price: 0.0), Store(storeName: "Price Chopper", price: 0.0)]
+            // Find the store they entered and edit the price
+            for i in storesToAdd.indices {
+                if (storesToAdd[i].storeName == store) {
+                    storesToAdd[i].price = price
+                }
+            }
+            items.addItem(item: GroceryItem(itemName: itemName, stores: storesToAdd))
         }
         // CLOSE VIEW
         dismiss()
@@ -54,7 +61,9 @@ struct AddItemView: View {
                 HStack {
                     Text("Add Item").font(.title).padding(.leading, 25)
                     Spacer()
-                }.padding(.bottom, 25)
+                }
+                    .padding(.bottom, 25)
+                    .padding(.top, 10)
                 Spacer()
                 
                 

@@ -17,7 +17,9 @@ struct ItemDetailView: View {
                         Spacer()
                         List {
                             ForEach(item.stores, id: \.self) { store in
-                                StoreView(store: store)
+                                if (store.price != 0.0) {
+                                    StoreView(store: store)
+                                }
                             }
                         }
                         NavigationLink(destination: EditItemView(passedItemName: itemName).environmentObject(itemStore)) {

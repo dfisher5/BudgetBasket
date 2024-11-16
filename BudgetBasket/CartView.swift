@@ -41,7 +41,7 @@ struct CartView: View {
                 else if (curStore.storeName == "Trader Joe's") {
                     itemPrices[1] = curStore.price
                 }
-                else if (curStore.storeName == "Shaws") {
+                else if (curStore.storeName == "Shaw's") {
                     itemPrices[2] = curStore.price
                 }
                 else {
