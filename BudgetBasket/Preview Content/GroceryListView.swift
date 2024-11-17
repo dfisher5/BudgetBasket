@@ -61,7 +61,7 @@ struct GroceryListView: View {
                             }
                         }
                     }.searchable(text: $itemToAdd) {
-                        ForEach(allItemNames.filter { $0.lowercased().contains(itemToAdd) }, id: \.self) { suggestion in
+                        ForEach(allItemNames.filter { $0.localizedCaseInsensitiveContains(itemToAdd) }, id: \.self) { suggestion in
                             Button {
                                 itemToAdd = suggestion
                                 addToList()

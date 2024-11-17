@@ -43,7 +43,7 @@ struct SearchView: View {
         if searchText.isEmpty {
             return allItemNames
         } else {
-            return allItemNames.filter { $0.lowercased().contains(searchText) }
+            return allItemNames.filter { $0.localizedCaseInsensitiveContains(searchText) }
         }
     }
 }
