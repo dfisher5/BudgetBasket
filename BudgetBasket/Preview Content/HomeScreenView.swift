@@ -105,7 +105,10 @@ struct HomeScreenView: View {
 //                .background(Color.gray.opacity(0.3))
 //                
             }
-        }.environmentObject(groceryList)
+        }
+            .environmentObject(groceryList)
+            .ignoresSafeArea()
+            .frame(height: UIScreen.main.bounds.height)
         .onChange(of: scenePhase) {
             updateData()
         }

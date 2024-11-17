@@ -18,13 +18,14 @@ struct StartScreenView: View {
     var body: some View {
         if active {
             HomeScreenView()
+                .transition(.slide)
         }
         else {
             VStack {
                 VStack {
                     Image(systemName: "basket")
                         .font(.system(size: 65))
-                        .foregroundColor(.black)
+                        .foregroundColor(.cyan)
                         .padding(.bottom, 10)
                     Text("Budget Basket")
                         .font(.system(size: 35))
@@ -42,7 +43,7 @@ struct StartScreenView: View {
             }
             .onAppear() {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    withAnimation (.smooth(duration: 1.0)){
+                    withAnimation {
                         self.active = true
                     }
                 }
