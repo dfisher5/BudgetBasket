@@ -42,7 +42,7 @@ struct StartScreenView: View {
             }
             .onAppear() {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    withAnimation {
+                    withAnimation (.smooth(duration: 1.0)){
                         self.active = true
                     }
                 }

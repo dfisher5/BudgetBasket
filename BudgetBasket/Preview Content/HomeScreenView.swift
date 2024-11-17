@@ -37,53 +37,73 @@ struct HomeScreenView: View {
     var body: some View {
         GeometryReader { geo in
             VStack {
-                VStack {
-                    if (screen == .shoppingList) {
-                        GroceryListView().environmentObject(itemStore)
-                    }
-                    else if (screen == .search) {
-                        SearchView().environmentObject(itemStore)
-                    }
-                    else if (screen == .cart) {
-                        CartView().environmentObject(itemStore)
-                    }
-                }
-                .frame(width: geo.size.width, height: geo.size.height - 50)
-                
-                
-                // NAV BAR
-                HStack {
-                    Spacer()
-                    
-                    // GROCERY LIST
-                    Button(action: {screen = .shoppingList} ) {
-                        Image(systemName: "list.bullet.rectangle")
-                            .foregroundStyle(.black)
-                            .font(.title)
-                    }
-                    
-                    Spacer()
-                    
-                    // SEARCH ICON
-                    Button(action: {screen = .search} ) {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundStyle(.black)
-                            .font(.title)
-                    }
-                    
-                    Spacer()
-                    
-                    // CART ICON
-                    Button(action: {screen = .cart} ) {
+                // Tab View
+                Spacer()
+                TabView() {
+                    // Grocery List View
+                    GroceryListView().environmentObject(itemStore)
+                        .tabItem() {
+                            Image(systemName: "list.bullet.rectangle")
+                        }
+                    // Search
+                    SearchView().environmentObject(itemStore)
+                        .tabItem() {
+                            Image(systemName: "magnifyingglass")
+                        }
+                    // Cart
+                    CartView().environmentObject(itemStore)
+                        .tabItem() {
                         Image(systemName: "cart")
-                            .foregroundStyle(.black)
-                            .font(.title)
                     }
-                    Spacer()
                 }
-                .frame(width: UIScreen.main.bounds.width, height: 75)
-                .background(Color.gray.opacity(0.3))
-                
+                .accentColor(.cyan)
+//                VStack {
+//                    if (screen == .shoppingList) {
+//                        GroceryListView().environmentObject(itemStore)
+//                    }
+//                    else if (screen == .search) {
+//                        SearchView().environmentObject(itemStore)
+//                    }
+//                    else if (screen == .cart) {
+//                        CartView().environmentObject(itemStore)
+//                    }
+//                }
+//                .frame(width: geo.size.width, height: geo.size.height - 50)
+//                
+//                
+//                // NAV BAR
+//                HStack {
+//                    Spacer()
+//                    
+//                    // GROCERY LIST
+//                    Button(action: {screen = .shoppingList} ) {
+//                        Image(systemName: "list.bullet.rectangle")
+//                            .foregroundStyle(.black)
+//                            .font(.title)
+//                    }
+//                    
+//                    Spacer()
+//                    
+//                    // SEARCH ICON
+//                    Button(action: {screen = .search} ) {
+//                        Image(systemName: "magnifyingglass")
+//                            .foregroundStyle(.black)
+//                            .font(.title)
+//                    }
+//                    
+//                    Spacer()
+//                    
+//                    // CART ICON
+//                    Button(action: {screen = .cart} ) {
+//                        Image(systemName: "cart")
+//                            .foregroundStyle(.black)
+//                            .font(.title)
+//                    }
+//                    Spacer()
+//                }
+//                .frame(width: UIScreen.main.bounds.width, height: 75)
+//                .background(Color.gray.opacity(0.3))
+//                
             }
         }.environmentObject(groceryList)
         .onChange(of: scenePhase) {

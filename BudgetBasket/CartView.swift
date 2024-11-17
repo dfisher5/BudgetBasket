@@ -203,7 +203,10 @@ struct CartView: View {
             VStack {
                 // TITLE
                 HStack {
-                    Text("Shopping Plan").font(.title).padding(.leading, 25)
+                    Text("Shopping Plan")
+                        .font(.largeTitle)
+                        .bold()
+                        .padding(.leading, 25)
                     Spacer()
                 }
                     .padding(.bottom, 25)
@@ -263,12 +266,6 @@ struct CartView: View {
                                 .padding(.bottom, 15)
                                 .background(.gray.opacity(0.1))
                                 .cornerRadius(10.0)
-                            }
-                            else {
-                                HStack {
-                                    Text("No Items").font(.title3)
-                                    Spacer()
-                                }.padding(.leading, 40)
                             }
                         }
                     }
