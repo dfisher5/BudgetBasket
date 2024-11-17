@@ -17,7 +17,7 @@ struct StartScreenView: View {
     
     var body: some View {
         if active {
-            HomeScreenView()
+            LoginView().environmentObject(Authentication())
                 .transition(.slide)
         }
         else {

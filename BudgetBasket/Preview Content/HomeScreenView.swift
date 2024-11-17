@@ -57,7 +57,7 @@ struct HomeScreenView: View {
                     }
                 }
                 .accentColor(.cyan)
-//                VStack {
+//                VStack
 //                    if (screen == .shoppingList) {
 //                        GroceryListView().environmentObject(itemStore)
 //                    }
@@ -106,6 +106,7 @@ struct HomeScreenView: View {
 //                
             }
         }
+            .navigationBarBackButtonHidden(true)
             .environmentObject(groceryList)
             .ignoresSafeArea()
             .frame(height: UIScreen.main.bounds.height)
