@@ -61,7 +61,7 @@ class Authentication: ObservableObject {
       .map { flow, email, password, confirmPassword in
         flow == .login
         ? !(email.isEmpty || password.isEmpty)
-        : !(email.isEmpty || password.isEmpty || confirmPassword.isEmpty)
+        : !(email.isEmpty || password.isEmpty) // || confirmPassword.isEmpty)
       }
       .assign(to: &$isValid)
   }

@@ -46,15 +46,25 @@ struct LoginView: View {
         }
     }
   }
+    private func signUpWithEmailPassword() {
+        Task {
+            if await viewModel.signUpWithEmailPassword() == true {
+                viewModel.authenticationState = .authenticated
+                navigateToHome = true
+            }
+        }
+    }
+    
+    
 
     var body: some View {
-        NavigationStack {
+        if (!navigateToHome) {
             VStack {
                 Image("Login")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(minHeight: 300, maxHeight: 400)
-                Text("Login")
+                Text(viewModel.flow == .login ? "Login" : "Sign Up")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -94,9 +104,9 @@ struct LoginView: View {
                     }
                 }
                 
-                Button(action: signInWithEmailPassword) {
+                Button(action: (viewModel.flow == .login ?  signInWithEmailPassword : signUpWithEmailPassword)) {
                     if viewModel.authenticationState != .authenticating {
-                        Text("Login")
+                        Text(viewModel.flow == .login ? "Login" : "Sign Up")
                             .padding(.vertical, 8)
                             .frame(maxWidth: .infinity)
                     }
@@ -139,9 +149,13 @@ struct LoginView: View {
             }
             .listStyle(.plain)
             .padding()
-            .navigationDestination(isPresented: $navigateToHome) {
-                HomeScreenView()
-            }
+//            .navigationDestination(isPresented: $navigateToHome) {
+//                HomeScreenView()
+//            }
+        }
+        else {
+            HomeScreenView()
+                .transition(.opacity)
         }
     }
 }
