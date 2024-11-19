@@ -108,9 +108,7 @@ extension Authentication {
   func signInWithEmailPassword() async -> Bool {
     authenticationState = .authenticating
     do {
-        print("meow")
       try await Auth.auth().signIn(withEmail: self.email, password: self.password)
-        print("meow2")
       return true
     }
     catch  {

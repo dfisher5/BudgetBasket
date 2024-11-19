@@ -37,9 +37,7 @@ struct LoginView: View {
 
   private func signInWithEmailPassword() {
     Task {
-        print("meow3")
         if await viewModel.signInWithEmailPassword() == true {
-            print("meow4")
             // Update the authentication state to trigger navigation
             viewModel.authenticationState = .authenticated
             navigateToHome = true
