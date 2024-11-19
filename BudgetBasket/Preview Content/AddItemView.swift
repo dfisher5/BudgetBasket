@@ -12,11 +12,10 @@ struct AddItemView: View {
     @State private var itemName = ""
     @State private var itemPriceStr = ""
     @State private var store : String = "Hannaford"
-    @State private var tempPrice : Bool = false
-    @State private var date : Date = Date()
+    @State private var salePrice : Bool = false
     @State private var itemAdded : Bool = false
     let storeOptions : [String] = ["Hannaford", "Trader Joe's", "Shaw's", "Price Chopper"]
-    let tempPriceOptions : [Bool] = [true, false]
+    let salePriceOptions : [Bool] = [true, false]
 
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var items : ItemStore
@@ -32,21 +31,16 @@ struct AddItemView: View {
     
     // HELPER FUNC TO ADD ITEM
     func addItem() {
-        if (tempPrice) {
-            let storeToAdd : [Store] = [Store(storeName: store, price: price, priceGoodThrough: DateFormatter().string(from: date))]
-            items.addItem(item: GroceryItem(itemName: itemName, stores: storeToAdd))
-        }
-        else {
-            // Make an arrya of all stores with prices 0.00
-            var storesToAdd : [Store] = [Store(storeName: "Hannaford", price: 0.0), Store(storeName: "Trader Joe's", price: 0.0), Store(storeName: "Shaw's", price: 0.0), Store(storeName: "Price Chopper", price: 0.0)]
-            // Find the store they entered and edit the price
-            for i in storesToAdd.indices {
-                if (storesToAdd[i].storeName == store) {
-                    storesToAdd[i].price = price
-                }
+        // Make an arrya of all stores with prices 0.00
+        var storesToAdd : [Store] = [Store(storeName: "Hannaford", price: 0.0), Store(storeName: "Trader Joe's", price: 0.0), Store(storeName: "Shaw's", price: 0.0), Store(storeName: "Price Chopper", price: 0.0)]
+        // Find the store they entered and edit the price
+        for i in storesToAdd.indices {
+            if (storesToAdd[i].storeName == store) {
+                storesToAdd[i].price = price
+                storesToAdd[i].salePrice = salePrice
             }
-            items.addItem(item: GroceryItem(itemName: itemName, stores: storesToAdd))
         }
+        items.addItem(item: GroceryItem(itemName: itemName, stores: storesToAdd))
         // CLOSE VIEW
         dismiss()
     }
@@ -124,12 +118,12 @@ struct AddItemView: View {
                 // TEMPORARY PRICE
                 VStack {
                     HStack {
-                        Text("Temporary Price?")
+                        Text("Sale Price?")
                             .padding(.trailing, 10)
                         Picker(
                             "No Selection",
-                            selection: $tempPrice) {
-                                ForEach(tempPriceOptions, id: \.self) { option in
+                            selection: $salePrice) {
+                                ForEach(salePriceOptions, id: \.self) { option in
                                     Text(option ? "Yes" : "No")
                                 }
                             }
@@ -142,30 +136,30 @@ struct AddItemView: View {
                 Spacer()
                 
                 
-                // PRICE GOOD UNTIL
-                VStack {
-                    HStack {
-                        Text(!tempPrice ? "Price Good" : "Price Good Until").foregroundStyle(!tempPrice ? .gray : .black)
-                        Spacer()
-                    }
-                    HStack {
-                        if (tempPrice) {
-                            DatePicker(
-                                "",
-                                selection: $date,
-                                displayedComponents: .date)
-                        } else {
-                            Text("Indefinitley").foregroundStyle(.gray)
-                        }
-                        Spacer()
-                    }
-                    .labelsHidden()
-                    .padding()
-                    .frame(height: 50)
-                }
-                .padding(.leading, 30)
-                .padding(.bottom, 25)
-                Spacer()
+//                // PRICE GOOD UNTIL
+//                VStack {
+//                    HStack {
+//                        Text(!tempPrice ? "Price Good" : "Price Good Until").foregroundStyle(!tempPrice ? .gray : .black)
+//                        Spacer()
+//                    }
+//                    HStack {
+//                        if (tempPrice) {
+//                            DatePicker(
+//                                "",
+//                                selection: $date,
+//                                displayedComponents: .date)
+//                        } else {
+//                            Text("Indefinitley").foregroundStyle(.gray)
+//                        }
+//                        Spacer()
+//                    }
+//                    .labelsHidden()
+//                    .padding()
+//                    .frame(height: 50)
+//                }
+//                .padding(.leading, 30)
+//                .padding(.bottom, 25)
+//                Spacer()
                 
                 
                 // ADD BUTTON

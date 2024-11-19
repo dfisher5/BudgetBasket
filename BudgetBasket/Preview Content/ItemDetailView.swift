@@ -53,8 +53,8 @@ struct StoreView: View {
             Text(store.storeName)
                 .foregroundColor(.primary)
                 .font(.headline)
-            Text(String(format: "%.2f", store.price)) // Display formatted price
-                .foregroundColor(.secondary)
+            Text(String(format: "%.2f" + (store.salePrice ? " - Sale Price" : ""), store.price)) // Display formatted price
+                .foregroundColor(store.salePrice ? .cyan : .secondary)
                 .font(.subheadline)
         }
     }

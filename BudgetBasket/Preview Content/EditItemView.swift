@@ -13,11 +13,10 @@ struct EditItemView: View {
     @State private var itemName = ""
     @State private var itemPriceStr = ""
     @State private var store : String = "Hannaford"
-    @State private var tempPrice : Bool = false
-    @State private var date : Date = Date()
+    @State private var salePrice : Bool = false
     @State private var itemAdded : Bool = false
     let storeOptions : [String] = ["Hannaford", "Trader Joe's", "Shaws", "City Market"]
-    let tempPriceOptions : [Bool] = [true, false]
+    let salePriceOptions : [Bool] = [true, false]
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var items : ItemStore
@@ -35,14 +34,12 @@ struct EditItemView: View {
     func editItem() {
         // Find the item to change prices of
         for i in items.allItems.indices {
-            print(items.allItems[i].itemName)
-            print(passedItemName)
             if (items.allItems[i].itemName == passedItemName) {
                 // Go through the stores and find the correct one
                 for j in items.allItems[i].stores.indices {
                     if (items.allItems[i].stores[j].storeName == store) {
                         items.allItems[i].stores[j].price = price
-                        print(items.allItems[i].stores[j].price)
+                        items.allItems[i].stores[j].salePrice = salePrice
                     }
                 }
             }
@@ -112,12 +109,12 @@ struct EditItemView: View {
                             // TEMPORARY PRICE
                             VStack {
                                 HStack {
-                                    Text("Temporary Price?")
+                                    Text("Sale Price?")
                                         .padding(.trailing, 10)
                                     Picker(
                                         "No Selection",
-                                        selection: $tempPrice) {
-                                            ForEach(tempPriceOptions, id: \.self) { option in
+                                        selection: $salePrice) {
+                                            ForEach(salePriceOptions, id: \.self) { option in
                                                 Text(option ? "Yes" : "No")
                                             }
                                         }
@@ -129,30 +126,30 @@ struct EditItemView: View {
                             .padding(.bottom, 25)
                             Spacer()
                             
-                            // PRICE GOOD UNTIL
-                            VStack {
-                                HStack {
-                                    Text(!tempPrice ? "Price Good" : "Price Good Until").foregroundStyle(!tempPrice ? .gray : .black)
-                                    Spacer()
-                                }
-                                HStack {
-                                    if (tempPrice) {
-                                        DatePicker(
-                                            "",
-                                            selection: $date,
-                                            displayedComponents: .date)
-                                    } else {
-                                        Text("Indefinitley").foregroundStyle(.gray)
-                                    }
-                                    Spacer()
-                                }
-                                .labelsHidden()
-                                .padding()
-                                .frame(height: 50)
-                            }
-                            .padding(.leading, 30)
-                            .padding(.bottom, 25)
-                            Spacer()
+//                            // PRICE GOOD UNTIL
+//                            VStack {
+//                                HStack {
+//                                    Text(!tempPrice ? "Price Good" : "Price Good Until").foregroundStyle(!tempPrice ? .gray : .black)
+//                                    Spacer()
+//                                }
+//                                HStack {
+//                                    if (tempPrice) {
+//                                        DatePicker(
+//                                            "",
+//                                            selection: $date,
+//                                            displayedComponents: .date)
+//                                    } else {
+//                                        Text("Indefinitley").foregroundStyle(.gray)
+//                                    }
+//                                    Spacer()
+//                                }
+//                                .labelsHidden()
+//                                .padding()
+//                                .frame(height: 50)
+//                            }
+//                            .padding(.leading, 30)
+//                            .padding(.bottom, 25)
+//                            Spacer()
                             
                             // ADD BUTTON
                             VStack {

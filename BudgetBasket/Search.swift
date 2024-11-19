@@ -10,19 +10,17 @@ import Foundation
 struct Store : Hashable {
     var storeName: String = ""
     var price: Double = 0.0
-    var temporaryPrice: Bool = false
-    var priceGoodThrough: String = ""
+    var salePrice: Bool = false
     
     init(storeName: String, price: Double) {
         self.storeName = storeName
         self.price = price
     }
     
-    init(storeName: String, price: Double, priceGoodThrough: String) {
+    init(storeName: String, price: Double, salePrice: Bool) {
         self.storeName = storeName
         self.price = price
-        self.priceGoodThrough = priceGoodThrough
-        self.temporaryPrice = true
+        self.salePrice = salePrice
     }
 }
 
