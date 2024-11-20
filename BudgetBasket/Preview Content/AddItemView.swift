@@ -19,6 +19,7 @@ struct AddItemView: View {
 
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var items : ItemStore
+    @EnvironmentObject var fb : FirebaseFunctions
     
     private var price : Double { Double(itemPriceStr) ?? 0.0}
     
@@ -31,16 +32,17 @@ struct AddItemView: View {
     
     // HELPER FUNC TO ADD ITEM
     func addItem() {
-        // Make an arrya of all stores with prices 0.00
-        var storesToAdd : [Store] = [Store(storeName: "Hannaford", price: 0.0), Store(storeName: "Trader Joe's", price: 0.0), Store(storeName: "Shaw's", price: 0.0), Store(storeName: "Price Chopper", price: 0.0)]
+        // Make an array of all stores with prices 0.00
+        var storesToAdd : [[String : Any]] = [["name" : "Hannaford", "price": 0.0, "temporaryPrice": false], ["name" : "Trader Joe's", "price": 0.0, "temporaryPrice": false], ["name" : "Shaw's", "price": 0.0, "temporaryPrice": false], ["name" : "Price Chopper", "price": 0.0, "temporaryPrice": false]]
         // Find the store they entered and edit the price
-        for i in storesToAdd.indices {
-            if (storesToAdd[i].storeName == store) {
-                storesToAdd[i].price = price
-                storesToAdd[i].salePrice = salePrice
+        for (index, var i) in storesToAdd.enumerated() {
+            if let name = i["name"] as? String, name == store {
+                i["price"] = price
+                i["temporaryPrice"] = salePrice
+                storesToAdd[index] = i
             }
         }
-        items.addItem(item: GroceryItem(itemName: itemName, stores: storesToAdd))
+        fb.addNewEntry(item: ["name": itemName], stores: storesToAdd)
         // CLOSE VIEW
         dismiss()
     }
@@ -135,33 +137,6 @@ struct AddItemView: View {
                 .padding(.bottom, 25)
                 Spacer()
                 
-                
-//                // PRICE GOOD UNTIL
-//                VStack {
-//                    HStack {
-//                        Text(!tempPrice ? "Price Good" : "Price Good Until").foregroundStyle(!tempPrice ? .gray : .black)
-//                        Spacer()
-//                    }
-//                    HStack {
-//                        if (tempPrice) {
-//                            DatePicker(
-//                                "",
-//                                selection: $date,
-//                                displayedComponents: .date)
-//                        } else {
-//                            Text("Indefinitley").foregroundStyle(.gray)
-//                        }
-//                        Spacer()
-//                    }
-//                    .labelsHidden()
-//                    .padding()
-//                    .frame(height: 50)
-//                }
-//                .padding(.leading, 30)
-//                .padding(.bottom, 25)
-//                Spacer()
-                
-                
                 // ADD BUTTON
                 VStack {
                     Button(action : {addItem()}) {
@@ -179,5 +154,5 @@ struct AddItemView: View {
 }
 
 #Preview {
-    AddItemView().environmentObject(ItemStore())
+    AddItemView().environmentObject(ItemStore()).environmentObject(FirebaseFunctions())
 }
