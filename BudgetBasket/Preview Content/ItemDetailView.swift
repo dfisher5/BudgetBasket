@@ -7,7 +7,6 @@ struct ItemDetailView: View {
     var itemName: String
     
     var body: some View {
-//        NavigationView {
             VStack {
                 if let item = itemToDisplay {
                     VStack {
@@ -38,7 +37,6 @@ struct ItemDetailView: View {
                 } else {
                     Text("Item not found")
                 }
-//            }
         }
     }
     

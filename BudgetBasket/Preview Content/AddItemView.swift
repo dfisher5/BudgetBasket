@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
 struct AddItemView: View {
     // VARIABLES
@@ -30,6 +31,33 @@ struct AddItemView: View {
             return formatter
         }()
     
+    func getAllItems()async throws {
+        // Reset Item Store
+        items.allItems = [GroceryItem]()
+        
+        let dbItemStore = Firestore.firestore().collection("items")
+        let docs = try await dbItemStore.getDocuments()
+        for d in docs.documents {
+            do {
+                // Item name
+                var itemName = d.data()["name"] as! String
+                
+                // Stores
+                var stores = d.data()["stores"] as! Array<Dictionary<String, Any>>
+                var storesToAdd = [Store]()
+                
+                // Hannaford
+                for s in stores {
+                    storesToAdd.append(Store(storeName: s["name"] as! String, price: s["price"] as! Double, salePrice: s["temporaryPrice"] as! Bool))
+                }
+                
+                items.addItem(item: GroceryItem(itemName: itemName, stores: storesToAdd))
+            }
+            
+        }
+        
+    }
+    
     // HELPER FUNC TO ADD ITEM
     func addItem() {
         // Make an array of all stores with prices 0.00
@@ -43,6 +71,13 @@ struct AddItemView: View {
             }
         }
         fb.addNewEntry(item: ["name": itemName], stores: storesToAdd)
+        
+        
+        // Update Item Store
+        Task {
+            try await getAllItems()
+        }
+        
         // CLOSE VIEW
         dismiss()
     }
@@ -148,7 +183,8 @@ struct AddItemView: View {
                             .cornerRadius(15)
                     }
                 }.padding()
-            }.frame(width: geo.size.width, height: geo.size.height)
+            }
+                .frame(width: geo.size.width, height: geo.size.height)
         }
     }
 }
