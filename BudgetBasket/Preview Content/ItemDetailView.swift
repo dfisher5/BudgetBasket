@@ -2,10 +2,12 @@ import SwiftUI
 
 struct ItemDetailView: View {
     @EnvironmentObject var itemStore: ItemStore
+    @EnvironmentObject var redrawFlag : RedrawFlag
+    
     var itemName: String
     
     var body: some View {
-        NavigationView {
+//        NavigationView {
             VStack {
                 if let item = itemToDisplay {
                     VStack {
@@ -22,7 +24,7 @@ struct ItemDetailView: View {
                                 }
                             }
                         }
-                        NavigationLink(destination: EditItemView(passedItemName: itemName).environmentObject(itemStore)) {
+                        NavigationLink(destination: EditItemView(passedItemName: itemName).environmentObject(itemStore).environmentObject(redrawFlag)) {
                             Text("Edit item")
                                 .padding(.horizontal, 100)
                                 .padding(.vertical, 10)
@@ -36,7 +38,7 @@ struct ItemDetailView: View {
                 } else {
                     Text("Item not found")
                 }
-            }
+//            }
         }
     }
     

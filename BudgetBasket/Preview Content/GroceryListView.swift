@@ -54,7 +54,7 @@ struct GroceryListView: View {
                     List {
                         ForEach(groceryList.itemsWithQuantities, id: \.id) { item in
                             NavigationLink {
-                                ItemDetailView(itemName: item.itemName).environmentObject(itemStore)
+//                                ItemDetailView(itemName: item.itemName).environmentObject(itemStore)
                             } label: {
                                 Text("\(item.quantity) ").opacity(0.5)
                                 Text("\(item.itemName)")

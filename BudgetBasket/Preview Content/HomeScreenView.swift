@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
 enum ScreenToShow {
     case shoppingList
@@ -33,6 +34,41 @@ struct HomeScreenView: View {
             return false
         }
     }
+    
+    func getAllItems() async throws {
+        let dbItemStore = Firestore.firestore().collection("items")
+        let docs = try await dbItemStore.getDocuments()
+        for d in docs.documents {
+            do {
+                // Item name
+                var itemName = d.data()["name"] as! String
+                
+                // Stores
+                var stores = d.data()["stores"] as! Array<Dictionary<String, Any>>
+                var storesToAdd = [Store]()
+                
+                // Hannaford
+                for s in stores {
+                    storesToAdd.append(Store(storeName: s["name"] as! String, price: s["price"] as! Double, salePrice: s["temporaryPrice"] as! Bool))
+                }
+//                var han = Store(storeName: "Hannaford", price: (stores["Hannaford"] as! Dictionary<String, Any>)["price"] as! Double, salePrice: (stores["Hannaford"] as! Dictionary<String, Any>)["salePrice"] as! Bool)
+//                
+//                // Shaws
+//                var shaws = Store(storeName: "Shaw's", price: (stores["Shaw's"] as! Dictionary<String, Any>)["price"] as! Double, salePrice: (stores["Shaw's"] as! Dictionary<String, Any>)["salePrice"] as! Bool)
+//                
+//                // Price Chopper
+//                var pc = Store(storeName: "Price Chopper", price: (stores["Price Chopper"] as! Dictionary<String, Any>)["price"] as! Double, salePrice: (stores["Price Chopper"] as! Dictionary<String, Any>)["salePrice"] as! Bool)
+//                
+//                // Trader Joes
+//                var tjs = Store(storeName: "Trader Joe's", price: (stores["Trader Joe's"] as! Dictionary<String, Any>)["price"] as! Double, salePrice: (stores["Trader Joe's"] as! Dictionary<String, Any>)["salePrice"] as! Bool)
+                
+                itemStore.addItem(item: GroceryItem(itemName: itemName, stores: storesToAdd))
+            } 
+            
+        }
+        
+    }
+    
     
     var body: some View {
         GeometryReader { geo in
@@ -108,10 +144,20 @@ struct HomeScreenView: View {
         }
             .navigationBarBackButtonHidden(true)
             .environmentObject(groceryList)
+            .environmentObject(RedrawFlag())
             .ignoresSafeArea()
             .frame(height: UIScreen.main.bounds.height)
         .onChange(of: scenePhase) {
             updateData()
+        }
+        .onAppear() {
+            Task {
+                do {
+                    try await getAllItems()
+                } catch {
+                    print("ERROR")
+                }
+            }
         }
     }
 }

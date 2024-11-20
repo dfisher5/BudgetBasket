@@ -15,11 +15,12 @@ struct EditItemView: View {
     @State private var store : String = "Hannaford"
     @State private var salePrice : Bool = false
     @State private var itemAdded : Bool = false
-    let storeOptions : [String] = ["Hannaford", "Trader Joe's", "Shaws", "City Market"]
+    let storeOptions : [String] = ["Hannaford", "Trader Joe's", "Shaw's", "Price Chopper"]
     let salePriceOptions : [Bool] = [true, false]
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var items : ItemStore
+    @EnvironmentObject var redrawFlag : RedrawFlag
     
     private var price : Double { Double(itemPriceStr) ?? 0.0}
     
@@ -45,6 +46,7 @@ struct EditItemView: View {
             }
         }
         // CLOSE VIEW
+        redrawFlag.increment()
         dismiss()
     }
         
