@@ -1,21 +1,8 @@
 //
 // LoginView.swift
-// Favourites
 //
-// Created by Peter Friese on 08.07.2022
+// Heavily sourced from Peter Friese, created on 08.07.2022
 // Copyright © 2022 Google LLC.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//    http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 
 import SwiftUI
 import Combine
@@ -30,9 +17,7 @@ struct LoginView: View {
   @EnvironmentObject var viewModel: Authentication
   @Environment(\.colorScheme) var colorScheme
   @Environment(\.dismiss) var dismiss
-
-    @State private var navigateToHome = false
-    
+  @State private var navigateToHome = false
   @FocusState private var focus: FocusableField?
 
   private func signInWithEmailPassword() {
@@ -118,21 +103,6 @@ struct LoginView: View {
                 .disabled(!viewModel.isValid)
                 .frame(maxWidth: .infinity)
                 .buttonStyle(.borderedProminent)
-                
-                HStack {
-                    VStack { Divider() }
-                    Text("or")
-                    VStack { Divider() }
-                }
-                
-                SignInWithAppleButton(.signIn) { request in
-                    viewModel.handleSignInWithAppleRequest(request)
-                } onCompletion: { result in
-                    viewModel.handleSignInWithAppleCompletion(result)
-                }
-                .signInWithAppleButtonStyle(colorScheme == .light ? .black : .white)
-                .frame(maxWidth: .infinity, minHeight: 50)
-                .cornerRadius(8)
                 
                 HStack {
                     Text("Don't have an account yet?")
