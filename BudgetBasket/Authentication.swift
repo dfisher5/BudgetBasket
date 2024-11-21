@@ -8,10 +8,6 @@
 import Foundation
 import FirebaseAuth
 
-// For Sign in with Apple
-//import AuthenticationServices
-//import CryptoKit
-
 enum AuthenticationState {
   case unauthenticated
   case authenticating
@@ -41,7 +37,6 @@ class Authentication: ObservableObject {
 
   init() {
     registerAuthStateHandler()
-    //verifySignInWithAppleAuthenticationState()
 
     $flow
       .combineLatest($email, $password, $confirmPassword)
