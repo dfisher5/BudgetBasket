@@ -13,6 +13,7 @@ struct GroceryListView: View {
     @State private var editing: Bool = false
     @State private var itemIndex: Int = 0
     @State private var fun: Int = 18
+    @EnvironmentObject var redrawFlag : RedrawFlag
     @EnvironmentObject var groceryList: GroceryListWithQuantities
     
     func addToList() {
@@ -54,7 +55,7 @@ struct GroceryListView: View {
                     List {
                         ForEach(groceryList.itemsWithQuantities, id: \.id) { item in
                             NavigationLink {
-                               ItemDetailView(itemName: item.itemName).environmentObject(itemStore)
+                                ItemDetailView(itemName: item.itemName).environmentObject(itemStore)
                             } label: {
                                 Text("\(item.quantity) ").opacity(0.5)
                                 Text("\(item.itemName)")
@@ -86,6 +87,6 @@ struct GroceryListView: View {
 
 struct GroceryView_Previews: PreviewProvider {
     static var previews: some View {
-        GroceryListView().environmentObject(GroceryListWithQuantities()).environmentObject(ItemStore())
+        GroceryListView().environmentObject(GroceryListWithQuantities()).environmentObject(ItemStore()).environmentObject(RedrawFlag())
     }
 }
