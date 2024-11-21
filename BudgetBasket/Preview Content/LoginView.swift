@@ -105,7 +105,7 @@ struct LoginView: View {
                 .buttonStyle(.borderedProminent)
                 
                 HStack {
-                    Text(viewModel.flow == .login ? "Don't have an account yet?" : "Already have an account?")
+                    Text(viewModel.flow == .login ? "Don't have an account?" : "Already have an account?")
                     Button(action: { viewModel.switchFlow() }) {
                         Text(viewModel.flow == .login ? "Sign up" : "Login")
                             .fontWeight(.semibold)
