@@ -105,9 +105,9 @@ struct LoginView: View {
                 .buttonStyle(.borderedProminent)
                 
                 HStack {
-                    Text("Don't have an account yet?")
+                    Text(viewModel.flow == .login ? "Don't have an account yet?" : "Already have an account?")
                     Button(action: { viewModel.switchFlow() }) {
-                        Text("Sign up")
+                        Text(viewModel.flow == .login ? "Sign up" : "Login")
                             .fontWeight(.semibold)
                             .foregroundColor(.blue)
                     }
@@ -117,9 +117,6 @@ struct LoginView: View {
             }
             .listStyle(.plain)
             .padding()
-//            .navigationDestination(isPresented: $navigateToHome) {
-//                HomeScreenView()
-//            }
         }
         else {
             HomeScreenView()
