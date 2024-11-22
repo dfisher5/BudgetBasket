@@ -40,6 +40,14 @@ struct NavBarView: View {
                     .font(.title)
             }
             Spacer()
+            
+            // PROFILE ICON
+            Button(action: {screen = .logout} ) {
+                Image(systemName: "person.circle.fill")
+                    .foregroundStyle(.black)
+                    .font(.title)
+            }
+            Spacer()
         }
         .frame(width: UIScreen.main.bounds.width, height: 75)
         .background(Color.gray.opacity(0.3))

@@ -38,6 +38,7 @@
 		2253AA1C2CE5A93D00F055AC /* GroceryListWithQuantities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2253AA1B2CE5A93D00F055AC /* GroceryListWithQuantities.swift */; };
 		2253AA1E2CE5A95D00F055AC /* QuantityEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2253AA1D2CE5A95D00F055AC /* QuantityEditView.swift */; };
 		2262BE822CC083B1002F0FC7 /* GroceryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2262BE812CC083B1002F0FC7 /* GroceryListView.swift */; };
+		22CCF6A02CEFFAEA00029A14 /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CCF69F2CEFFAE900029A14 /* LogoutView.swift */; };
 		B48FBC5D2CC1A86A00C70AEB /* DecimalNumberViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48FBC5C2CC1A86A00C70AEB /* DecimalNumberViewModifier.swift */; };
 		B48FBC612CC29CC300C70AEB /* NavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48FBC602CC29CC300C70AEB /* NavBarView.swift */; };
 		B48FBC652CC2ADC600C70AEB /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48FBC642CC2ADC500C70AEB /* HomeScreenView.swift */; };
@@ -90,6 +91,7 @@
 		2253AA1B2CE5A93D00F055AC /* GroceryListWithQuantities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GroceryListWithQuantities.swift; path = BudgetBasket/GroceryListWithQuantities.swift; sourceTree = SOURCE_ROOT; };
 		2253AA1D2CE5A95D00F055AC /* QuantityEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantityEditView.swift; sourceTree = "<group>"; };
 		2262BE812CC083B1002F0FC7 /* GroceryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryListView.swift; sourceTree = "<group>"; };
+		22CCF69F2CEFFAE900029A14 /* LogoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutView.swift; sourceTree = "<group>"; };
 		B48FBC5C2CC1A86A00C70AEB /* DecimalNumberViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalNumberViewModifier.swift; sourceTree = "<group>"; };
 		B48FBC602CC29CC300C70AEB /* NavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarView.swift; sourceTree = "<group>"; };
 		B48FBC642CC2ADC500C70AEB /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 			children = (
 				B4967D0C2CBD66EC000103A6 /* AddItemView.swift */,
 				1C0D69BB2CEAEDCA0073736F /* LoginView.swift */,
+				22CCF69F2CEFFAE900029A14 /* LogoutView.swift */,
 				1C0D69B82CEAEDCA0073736F /* SignUpView.swift */,
 				1C0D69B92CEAEDCA0073736F /* UserProfileView.swift */,
 				1CC53EE52CE40AED009AEDB6 /* CartView.swift */,
@@ -371,6 +374,7 @@
 				1C77D8632CBF64550067462B /* ItemDetailView.swift in Sources */,
 				2262BE822CC083B1002F0FC7 /* GroceryListView.swift in Sources */,
 				1C0863DC2CA330340084AEB0 /* BudgetBasketApp.swift in Sources */,
+				22CCF6A02CEFFAEA00029A14 /* LogoutView.swift in Sources */,
 				1C8D27D32CBE0C93001E857A /* SearchView.swift in Sources */,
 				1C0D69BE2CEAEDCB0073736F /* UserProfileView.swift in Sources */,
 				B48FBC612CC29CC300C70AEB /* NavBarView.swift in Sources */,

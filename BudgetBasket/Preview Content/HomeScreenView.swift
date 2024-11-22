@@ -13,6 +13,7 @@ enum ScreenToShow {
     case search
     case cart
     case addItem
+    case logout
 }
 
 struct HomeScreenView: View {
@@ -80,6 +81,11 @@ struct HomeScreenView: View {
                     CartView().environmentObject(itemStore)
                         .tabItem() {
                         Image(systemName: "cart")
+                    }
+                    // Logout
+                    LogoutView().environmentObject(itemStore)
+                        .tabItem() {
+                        Image(systemName: "person.circle.fill")
                     }
                 }
                 .accentColor(.cyan)
