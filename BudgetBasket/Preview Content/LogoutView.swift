@@ -19,15 +19,22 @@ struct LogoutView: View {
   @Environment(\.dismiss) var dismiss
   @State private var navigateToLogin = false
   @FocusState private var focus: FocusableField?
+  @State var loggedOut = false
     
     private func signOut() {
         viewModel.signOut()
         viewModel.email = ""
         viewModel.password = ""
+        viewModel.authenticationState = .unauthenticated
         navigateToLogin = true
+        //exit(0)
+        loggedOut = true
     }
     
     var body: some View {
+        if loggedOut {
+            StartScreenView()
+        }
         if (!navigateToLogin) {
             VStack {
                 Image("Login")
@@ -68,8 +75,11 @@ struct LogoutView: View {
             .padding()
         }
         else {
-            LoginView()
-                .transition(.opacity)
+            //NavigationView() {
+                //StartScreenView()
+            //}
+            //StartScreenView()
+                //.transition(.opacity)
         }
     }
 }
