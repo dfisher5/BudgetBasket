@@ -2,7 +2,6 @@
 // LogoutView.swift
 //
 // Heavily sourced from Peter Friese, created on 08.07.2022
-// Copyright © 2022 Google LLC.
 
 import SwiftUI
 import Combine
@@ -19,7 +18,7 @@ struct LogoutView: View {
   @Environment(\.dismiss) var dismiss
   @State private var navigateToLogin = false
   @FocusState private var focus: FocusableField?
-  @State var loggedOut = false
+  //@State var loggedOut = false
     
     private func signOut() {
         viewModel.signOut()
@@ -28,13 +27,11 @@ struct LogoutView: View {
         viewModel.authenticationState = .unauthenticated
         navigateToLogin = true
         //exit(0)
-        loggedOut = true
+        //loggedOut = true
+        
     }
     
     var body: some View {
-        if loggedOut {
-            StartScreenView()
-        }
         if (!navigateToLogin) {
             VStack {
                 Image("Login")
@@ -75,6 +72,8 @@ struct LogoutView: View {
             .padding()
         }
         else {
+            //NavBarView.init(dismiss: _dismiss)
+            //StartScreenView()
             //NavigationView() {
                 //StartScreenView()
             //}

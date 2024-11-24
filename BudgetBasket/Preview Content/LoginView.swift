@@ -120,7 +120,7 @@ struct LoginView: View {
         }
         else {
             HomeScreenView()
-                .transition(.opacity)
+                .transition(.opacity).environmentObject(viewModel)
         }
     }
 }

@@ -17,6 +17,7 @@ enum ScreenToShow {
 }
 
 struct HomeScreenView: View {
+    @EnvironmentObject var viewModel: Authentication
     @StateObject private var groceryList = GroceryListWithQuantities()
     @State var screen : ScreenToShow = .shoppingList
     @Environment(\.scenePhase) var scenePhase
@@ -64,31 +65,35 @@ struct HomeScreenView: View {
     var body: some View {
         GeometryReader { geo in
             VStack {
-                // Tab View
-                Spacer()
-                TabView() {
-                    // Grocery List View
-                    GroceryListView().environmentObject(itemStore)
-                        .tabItem() {
-                            Image(systemName: "list.bullet.rectangle")
-                        }
-                    // Search
-                    SearchView().environmentObject(itemStore)
-                        .tabItem() {
-                            Image(systemName: "magnifyingglass")
-                        }
-                    // Cart
-                    CartView().environmentObject(itemStore)
-                        .tabItem() {
-                        Image(systemName: "cart")
+                if viewModel.authenticationState == .unauthenticated {
+                    LoginView()
+                } else {
+                    // Tab View
+                    Spacer()
+                    TabView() {
+                        // Grocery List View
+                        GroceryListView().environmentObject(itemStore)
+                            .tabItem() {
+                                Image(systemName: "list.bullet.rectangle")
+                            }
+                        // Search
+                        SearchView().environmentObject(itemStore)
+                            .tabItem() {
+                                Image(systemName: "magnifyingglass")
+                            }
+                        // Cart
+                        CartView().environmentObject(itemStore)
+                            .tabItem() {
+                                Image(systemName: "cart")
+                            }
+                        // Logout
+                        LogoutView().environmentObject(itemStore)
+                            .tabItem() {
+                                Image(systemName: "person.circle.fill")
+                            }
                     }
-                    // Logout
-                    LogoutView().environmentObject(itemStore)
-                        .tabItem() {
-                        Image(systemName: "person.circle.fill")
-                    }
+                    .accentColor(.cyan)
                 }
-                .accentColor(.cyan)
             }
         }
             .navigationBarBackButtonHidden(true)
@@ -112,5 +117,5 @@ struct HomeScreenView: View {
 }
 
 #Preview {
-    HomeScreenView()
+    HomeScreenView().environmentObject(Authentication())
 }
