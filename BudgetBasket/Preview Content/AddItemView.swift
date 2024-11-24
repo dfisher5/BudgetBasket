@@ -175,7 +175,7 @@ struct AddItemView: View {
                 // ADD BUTTON
                 VStack {
                     Button(action : {addItem()}) {
-                        Text("Add Item")
+                            Text("Add Item")
                             .frame(width: UIScreen.main.bounds.width - 40, height: 50)
                             .background(.blue)
                             .foregroundStyle(.white)

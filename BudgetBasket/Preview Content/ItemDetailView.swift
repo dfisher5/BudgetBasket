@@ -23,7 +23,7 @@ struct ItemDetailView: View {
                                 }
                             }
                         }
-                        NavigationLink(destination: EditItemView(passedItemName: itemName).environmentObject(itemStore).environmentObject(redrawFlag)) {
+                        NavigationLink(destination: EditItemView(passedItemName: itemName).environmentObject(itemStore).environmentObject(redrawFlag).environmentObject(FirebaseFunctions())) {
                             Text("Edit item")
                                 .padding(.horizontal, 100)
                                 .padding(.vertical, 10)

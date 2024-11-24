@@ -15,12 +15,14 @@ struct EditItemView: View {
     @State private var store : String = "Hannaford"
     @State private var salePrice : Bool = false
     @State private var itemAdded : Bool = false
+    @State private var editedStores = [[String: Any]]()
     let storeOptions : [String] = ["Hannaford", "Trader Joe's", "Shaw's", "Price Chopper"]
     let salePriceOptions : [Bool] = [true, false]
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var items : ItemStore
     @EnvironmentObject var redrawFlag : RedrawFlag
+    @EnvironmentObject var fb : FirebaseFunctions
     
     private var price : Double { Double(itemPriceStr) ?? 0.0}
     
@@ -42,9 +44,16 @@ struct EditItemView: View {
                         items.allItems[i].stores[j].price = price
                         items.allItems[i].stores[j].salePrice = salePrice
                     }
+                    let updatedStore: [String: Any] = [
+                        "name": items.allItems[i].stores[j].storeName,
+                        "price": items.allItems[i].stores[j].price,
+                        "temporaryPrice": items.allItems[i].stores[j].salePrice
+                    ]
+                    editedStores.append(updatedStore)
                 }
             }
         }
+        fb.editEntry(item: passedItemName, stores: editedStores)
         // CLOSE VIEW
         redrawFlag.increment()
         dismiss()
@@ -128,31 +137,6 @@ struct EditItemView: View {
                             .padding(.bottom, 25)
                             Spacer()
                             
-//                            // PRICE GOOD UNTIL
-//                            VStack {
-//                                HStack {
-//                                    Text(!tempPrice ? "Price Good" : "Price Good Until").foregroundStyle(!tempPrice ? .gray : .black)
-//                                    Spacer()
-//                                }
-//                                HStack {
-//                                    if (tempPrice) {
-//                                        DatePicker(
-//                                            "",
-//                                            selection: $date,
-//                                            displayedComponents: .date)
-//                                    } else {
-//                                        Text("Indefinitley").foregroundStyle(.gray)
-//                                    }
-//                                    Spacer()
-//                                }
-//                                .labelsHidden()
-//                                .padding()
-//                                .frame(height: 50)
-//                            }
-//                            .padding(.leading, 30)
-//                            .padding(.bottom, 25)
-//                            Spacer()
-                            
                             // ADD BUTTON
                             VStack {
                                 Button(action : {editItem()}) {
@@ -177,5 +161,5 @@ struct EditItemView: View {
     }
 
 #Preview {
-    EditItemView(passedItemName: "Plain bagels").environmentObject(ItemStore())
+    EditItemView(passedItemName: "Plain bagels").environmentObject(ItemStore()).environmentObject(FirebaseFunctions())
 }
