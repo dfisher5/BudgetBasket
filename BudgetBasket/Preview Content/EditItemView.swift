@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct EditItemView: View {
     // VARIABLES
@@ -15,7 +16,9 @@ struct EditItemView: View {
     @State private var store : String = "Hannaford"
     @State private var salePrice : Bool = false
     @State private var itemAdded : Bool = false
+    @State private var selectedItem: PhotosPickerItem? = nil
     @State private var editedStores = [[String: Any]]()
+    @State private var editedImage = ""
     let storeOptions : [String] = ["Hannaford", "Trader Joe's", "Shaw's", "Price Chopper"]
     let salePriceOptions : [Bool] = [true, false]
     
@@ -23,6 +26,7 @@ struct EditItemView: View {
     @EnvironmentObject var items : ItemStore
     @EnvironmentObject var redrawFlag : RedrawFlag
     @EnvironmentObject var fb : FirebaseFunctions
+    @EnvironmentObject var image : ImageFunctions
     
     private var price : Double { Double(itemPriceStr) ?? 0.0}
     
@@ -33,7 +37,7 @@ struct EditItemView: View {
         return formatter
     }()
     
-    // HELPER FUNC TO ADD ITEM
+    // HELPER FUNC TO EDIT ITEM
     func editItem() {
         // Find the item to change prices of
         for i in items.allItems.indices {
@@ -51,49 +55,83 @@ struct EditItemView: View {
                     ]
                     editedStores.append(updatedStore)
                 }
+                // Check if image has changed, update editedImage if it has
+                editedImage = items.allItems[i].itemImage
+                let compressedImage = image.compressImage(image: image.selectedImage ?? UIImage()) ?? "n/a"
+                if (items.allItems[i].itemImage != compressedImage) {
+                    editedImage = compressedImage
+                    items.allItems[i].itemImage = editedImage
+                }
             }
         }
-        fb.editEntry(item: passedItemName, stores: editedStores)
+        fb.editEntry(item: passedItemName, stores: editedStores, image: editedImage)
         // CLOSE VIEW
         redrawFlag.increment()
         dismiss()
     }
-        
-        
+    
+    
     var body: some View {
         // CONTAINER
-            GeometryReader { geo in
-                VStack {
-                    if let passedItem = itemToDisplay {
+        ScrollView {
+            VStack {
+                if let passedItem = itemToDisplay {
+                    VStack {
+                        // TITLE
+                        HStack {
+                            Text("Edit Item").font(.title).padding(.leading, 25)
+                            Spacer()
+                        }
+                        .padding(.bottom, 25)
+                        .padding(.top, 10)
+                        Spacer()
+                        
+                        
+                        // ITEM NAME
+                        Text(passedItem.itemName).font(.title3)
+                        Spacer()
+                        
+                        // PRICE
                         VStack {
-                            // TITLE
-                            HStack {
-                                Text("Edit Item").font(.title).padding(.leading, 25)
+                            HStack{
+                                // Item name
+                                Text("Price").font(.title3)
                                 Spacer()
                             }
+                            TextField(String(format: "%.2f", passedItem.stores.first(where: { $0.storeName == store })?.price ?? 0.00), text: $itemPriceStr).padding(.trailing, 30)
+                                .decimalNumberOnly($itemPriceStr)
+                        }
+                        .textFieldStyle(.roundedBorder)
+                        .padding(.leading, 30)
+                        .padding(.bottom, 25)
+                        Spacer()
+                        
+                        // PHOTO PICKER
+                        if let imageSelection = image.selectedImage {
+                            Image(uiImage: imageSelection)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(maxWidth: 200, maxHeight: 200)
+                                .clipped()
+                                .padding(.leading, 30)
                                 .padding(.bottom, 25)
-                                .padding(.top, 10)
-                            Spacer()
+                        } else if let existingImageData = Data(base64Encoded: passedItem.itemImage),
+                                  let existingImage = UIImage(data: existingImageData) {
+                            Image(uiImage: existingImage)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(maxWidth: 200, maxHeight: 200)
+                                .clipped()
+                                .padding(.leading, 30)
+                                .padding(.bottom, 25)
+                        }
                             
-                            
-                            // ITEM NAME
-                            Text(passedItem.itemName).font(.title3)
-                            Spacer()
-                            
-                            // PRICE
-                            VStack {
-                                HStack{
-                                    // Item name
-                                    Text("Price").font(.title3)
-                                    Spacer()
-                                }
-                                TextField(String(format: "%.2f", passedItem.stores.first(where: { $0.storeName == store })?.price ?? 0.00), text: $itemPriceStr).padding(.trailing, 30)
-                                    .decimalNumberOnly($itemPriceStr)
-                            }
-                            .textFieldStyle(.roundedBorder)
-                            .padding(.leading, 30)
-                            .padding(.bottom, 25)
-                            Spacer()
+                            PhotosPicker(selection: $image.photoPickerSelection, matching: .images, label: {Text("Select image")})
+                                .padding()
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.blue, lineWidth: 2)
+                                )
                             
                             // STORE
                             VStack {
@@ -148,18 +186,18 @@ struct EditItemView: View {
                                         .cornerRadius(15)
                                 }
                             }.padding()
-                        }.frame(width: geo.size.width, height: geo.size.height)
+                        }
                     } else {
                         Text("Item not found")
                     }
                 }
             }
         }
-        var itemToDisplay: GroceryItem? {
-            items.allItems.first(where: { $0.itemName == passedItemName })
-        }
+    var itemToDisplay: GroceryItem? {
+        items.allItems.first(where: { $0.itemName == passedItemName })
     }
+}
 
 #Preview {
-    EditItemView(passedItemName: "Plain bagels").environmentObject(ItemStore()).environmentObject(FirebaseFunctions())
+    EditItemView(passedItemName: "Plain bagels").environmentObject(ItemStore()).environmentObject(FirebaseFunctions()).environmentObject(ImageFunctions())
 }

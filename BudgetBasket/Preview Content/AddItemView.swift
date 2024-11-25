@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseFirestore
+import PhotosUI
 
 struct AddItemView: View {
     // VARIABLES
@@ -15,12 +16,14 @@ struct AddItemView: View {
     @State private var store : String = "Hannaford"
     @State private var salePrice : Bool = false
     @State private var itemAdded : Bool = false
+    @State private var selectedItem: PhotosPickerItem? = nil
     let storeOptions : [String] = ["Hannaford", "Trader Joe's", "Shaw's", "Price Chopper"]
     let salePriceOptions : [Bool] = [true, false]
 
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var items : ItemStore
     @EnvironmentObject var fb : FirebaseFunctions
+    @EnvironmentObject var image : ImageFunctions
     
     private var price : Double { Double(itemPriceStr) ?? 0.0}
     
@@ -46,12 +49,12 @@ struct AddItemView: View {
                 var stores = d.data()["stores"] as! Array<Dictionary<String, Any>>
                 var storesToAdd = [Store]()
                 
-                // Hannaford
+                // Sale price
                 for s in stores {
                     storesToAdd.append(Store(storeName: s["name"] as! String, price: s["price"] as! Double, salePrice: s["temporaryPrice"] as! Bool))
                 }
-                
-                items.addItem(item: GroceryItem(itemName: itemName, stores: storesToAdd))
+                let compressedImage = image.compressImage(image: image.selectedImage ?? UIImage()) ?? "n/a"
+                items.addItem(item: GroceryItem(itemName: itemName, stores: storesToAdd, itemImage: compressedImage))
             }
             
         }
@@ -70,7 +73,8 @@ struct AddItemView: View {
                 storesToAdd[index] = i
             }
         }
-        fb.addNewEntry(item: ["name": itemName], stores: storesToAdd)
+        let compressedImage = image.compressImage(image: image.selectedImage ?? UIImage()) ?? "n/a"
+        fb.addNewEntry(item: ["name": itemName], stores: storesToAdd, image: compressedImage)
         
         
         // Update Item Store
@@ -86,15 +90,15 @@ struct AddItemView: View {
     var body: some View {
         
         // CONTAINER
-        GeometryReader { geo in
+        ScrollView {
             VStack {
                 // TITLE
                 HStack {
                     Text("Add Item").font(.title).padding(.leading, 25)
                     Spacer()
                 }
-                    .padding(.bottom, 25)
-                    .padding(.top, 10)
+                .padding(.bottom, 25)
+                .padding(.top, 10)
                 Spacer()
                 
                 
@@ -112,6 +116,23 @@ struct AddItemView: View {
                 .padding(.bottom, 25)
                 Spacer()
                 
+                
+                // PHOTO PICKER
+                if let imageSelection = image.selectedImage {
+                    Image(uiImage: imageSelection)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: 200, maxHeight: 200)
+                        .clipped()
+                        .padding(.leading, 30)
+                        .padding(.bottom, 25)
+                }
+                PhotosPicker(selection: $image.photoPickerSelection, matching: .images, label: {Text("Select image")})
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.blue, lineWidth: 2)
+                    )
                 
                 // PRICE
                 VStack {
@@ -152,7 +173,7 @@ struct AddItemView: View {
                 Spacer()
                 
                 
-                // TEMPORARY PRICE
+                // SALE PRICE
                 VStack {
                     HStack {
                         Text("Sale Price?")
@@ -175,7 +196,7 @@ struct AddItemView: View {
                 // ADD BUTTON
                 VStack {
                     Button(action : {addItem()}) {
-                            Text("Add Item")
+                        Text("Add Item")
                             .frame(width: UIScreen.main.bounds.width - 40, height: 50)
                             .background(Color.theme.accent)
                             .foregroundStyle(.white)
@@ -184,11 +205,14 @@ struct AddItemView: View {
                     }
                 }.padding()
             }
-                .frame(width: geo.size.width, height: geo.size.height)
+        }.onDisappear {
+            // Reset the photo picker selection
+            selectedItem = nil
+            image.selectedImage = nil
         }
     }
 }
 
 #Preview {
-    AddItemView().environmentObject(ItemStore()).environmentObject(FirebaseFunctions())
+    AddItemView().environmentObject(ItemStore()).environmentObject(FirebaseFunctions()).environmentObject(ImageFunctions())
 }
