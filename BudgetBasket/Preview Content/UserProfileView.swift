@@ -59,7 +59,7 @@ struct UserProfileView: View {
       }
       .listRowBackground(Color(UIColor.systemGroupedBackground))
       Section("Email") {
-        Text(viewModel.displayName)
+        //Text(viewModel.displayName)
       }
       Section {
         Button(role: .cancel, action: signOut) {

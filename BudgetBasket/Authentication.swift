@@ -30,7 +30,7 @@ class Authentication: ObservableObject {
   @Published var authenticationState: AuthenticationState = .unauthenticated
   @Published var errorMessage = ""
   @Published var user: User?
-  @Published var displayName = ""
+  //@Published var displayName = ""
 
   private var currentNonce: String?
 
@@ -54,7 +54,7 @@ class Authentication: ObservableObject {
       authStateHandler = Auth.auth().addStateDidChangeListener { auth, user in
         self.user = user
         self.authenticationState = user == nil ? .unauthenticated : .authenticated
-        self.displayName = user?.displayName ?? user?.email ?? ""
+        //self.displayName = user?.displayName ?? user?.email ?? ""
       }
     }
   }
