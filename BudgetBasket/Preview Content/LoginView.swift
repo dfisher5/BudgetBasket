@@ -73,7 +73,7 @@ struct LoginView: View {
                         .focused($focus, equals: .password)
                         .submitLabel(.go)
                         .onSubmit {
-                            signInWithEmailPassword()
+                            //signInWithEmailPassword()
                         }
                 }
                 .padding(.vertical, 6)
