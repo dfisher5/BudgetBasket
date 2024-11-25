@@ -7,34 +7,23 @@ import SwiftUI
 import Combine
 import AuthenticationServices
 
-private enum FocusableField: Hashable {
-  case email
-  //case password
-}
-
 struct LogoutView: View {
   @EnvironmentObject var viewModel: Authentication
-  @Environment(\.colorScheme) var colorScheme
-  @Environment(\.dismiss) var dismiss
-  @State private var navigateToLogin = false
-  @FocusState private var focus: FocusableField?
-  //@State var loggedOut = false
+  @State private var loggedOut = false
     
     private func signOut() {
         viewModel.signOut()
         viewModel.email = ""
         viewModel.password = ""
         viewModel.authenticationState = .unauthenticated
-        navigateToLogin = true
-        //exit(0)
-        //loggedOut = true
+        loggedOut = true
         
     }
     
     var body: some View {
-        if (!navigateToLogin) {
+        if (!loggedOut) {
             VStack {
-                Image("Login")
+                Image(" ")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(minHeight: 300, maxHeight: 400)
@@ -48,7 +37,6 @@ struct LogoutView: View {
                     Text(viewModel.email)
                 }
                 .padding(.vertical, 6)
-                //.background(Divider(), alignment: .bottom)
                 .padding(.bottom, 4)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
@@ -71,15 +59,7 @@ struct LogoutView: View {
             .listStyle(.plain)
             .padding()
         }
-        else {
-            //NavBarView.init(dismiss: _dismiss)
-            //StartScreenView()
-            //NavigationView() {
-                //StartScreenView()
-            //}
-            //StartScreenView()
-                //.transition(.opacity)
-        }
+        
     }
 }
 
