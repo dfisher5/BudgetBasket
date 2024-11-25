@@ -22,6 +22,7 @@ struct LoginView: View {
         if await viewModel.signInWithEmailPassword() == true {
             viewModel.authenticationState = .authenticated
             loggedIn = true
+            viewModel.errorMessage = ""
         }
     }
   }

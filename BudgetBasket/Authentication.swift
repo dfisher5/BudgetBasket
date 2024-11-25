@@ -22,24 +22,18 @@ enum AuthenticationFlow {
 class Authentication: ObservableObject {
   @Published var email = ""
   @Published var password = ""
-  @Published var confirmPassword = ""
-
   @Published var flow: AuthenticationFlow = .login
-
   @Published var isValid = false
   @Published var authenticationState: AuthenticationState = .unauthenticated
   @Published var errorMessage = ""
   @Published var user: User?
-  //@Published var displayName = ""
-
-  private var currentNonce: String?
 
   init() {
     registerAuthStateHandler()
 
     $flow
-      .combineLatest($email, $password, $confirmPassword)
-      .map { flow, email, password, confirmPassword in
+      .combineLatest($email, $password)
+      .map { flow, email, password in
         flow == .login
         ? !(email.isEmpty || password.isEmpty)
         : !(email.isEmpty || password.isEmpty)
@@ -54,7 +48,6 @@ class Authentication: ObservableObject {
       authStateHandler = Auth.auth().addStateDidChangeListener { auth, user in
         self.user = user
         self.authenticationState = user == nil ? .unauthenticated : .authenticated
-        //self.displayName = user?.displayName ?? user?.email ?? ""
       }
     }
   }
@@ -79,7 +72,6 @@ class Authentication: ObservableObject {
     flow = .login
     email = ""
     password = ""
-    confirmPassword = ""
   }
 }
 
