@@ -23,7 +23,6 @@
 		1C0D69B32CEAEC370073736F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1C0D69B22CEAEC370073736F /* FirebaseStorage */; };
 		1C0D69B52CEAEC4C0073736F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1C0D69B42CEAEC4C0073736F /* GoogleService-Info.plist */; };
 		1C0D69B72CEAED660073736F /* StartScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0D69B62CEAED660073736F /* StartScreenView.swift */; };
-		1C0D69BD2CEAEDCB0073736F /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0D69B82CEAEDCA0073736F /* SignUpView.swift */; };
 		1C0D69C02CEAEDCB0073736F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0D69BB2CEAEDCA0073736F /* LoginView.swift */; };
 		1C0D69C32CEAEDD50073736F /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0D69C22CEAEDD50073736F /* Authentication.swift */; };
 		1C0D69C72CEAF4E50073736F /* FirebaseFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0D69C62CEAF4E40073736F /* FirebaseFunctions.swift */; };
@@ -76,7 +75,6 @@
 		1C0863FD2CA330390084AEB0 /* BudgetBasketUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetBasketUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		1C0D69B42CEAEC4C0073736F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1C0D69B62CEAED660073736F /* StartScreenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartScreenView.swift; sourceTree = "<group>"; };
-		1C0D69B82CEAEDCA0073736F /* SignUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		1C0D69BB2CEAEDCA0073736F /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1C0D69C22CEAEDD50073736F /* Authentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		1C0D69C62CEAF4E40073736F /* FirebaseFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseFunctions.swift; sourceTree = "<group>"; };
@@ -172,7 +170,6 @@
 				B4967D0C2CBD66EC000103A6 /* AddItemView.swift */,
 				1C0D69BB2CEAEDCA0073736F /* LoginView.swift */,
 				22CCF69F2CEFFAE900029A14 /* LogoutView.swift */,
-				1C0D69B82CEAEDCA0073736F /* SignUpView.swift */,
 				1CC53EE52CE40AED009AEDB6 /* CartView.swift */,
 				1C0863DD2CA330340084AEB0 /* ContentView.swift */,
 				1CCAEADD2CD3D52000853131 /* EditItemView.swift */,
@@ -361,7 +358,6 @@
 				B48FBC5D2CC1A86A00C70AEB /* DecimalNumberViewModifier.swift in Sources */,
 				1C0D69C72CEAF4E50073736F /* FirebaseFunctions.swift in Sources */,
 				1CCAEADE2CD3D52000853131 /* EditItemView.swift in Sources */,
-				1C0D69BD2CEAEDCB0073736F /* SignUpView.swift in Sources */,
 				2253AA1C2CE5A93D00F055AC /* GroceryListWithQuantities.swift in Sources */,
 				1C0D69B72CEAED660073736F /* StartScreenView.swift in Sources */,
 				1C0D69C02CEAEDCB0073736F /* LoginView.swift in Sources */,
