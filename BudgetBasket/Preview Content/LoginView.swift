@@ -2,7 +2,6 @@
 // LoginView.swift
 //
 // Heavily sourced from Peter Friese, created on 08.07.2022
-// Copyright © 2022 Google LLC.
 
 import SwiftUI
 import Combine
@@ -15,21 +14,18 @@ private enum FocusableField: Hashable {
 
 struct LoginView: View {
   @EnvironmentObject var viewModel: Authentication
-  @Environment(\.colorScheme) var colorScheme
-  @Environment(\.dismiss) var dismiss
   @State private var navigateToHome = false
   @FocusState private var focus: FocusableField?
 
-  private func signInWithEmailPassword() {
+  private func signIn() {
     Task {
         if await viewModel.signInWithEmailPassword() == true {
-            // Update the authentication state to trigger navigation
             viewModel.authenticationState = .authenticated
             navigateToHome = true
         }
     }
   }
-    private func signUpWithEmailPassword() {
+    private func signUp() {
         Task {
             if await viewModel.signUpWithEmailPassword() == true {
                 viewModel.authenticationState = .authenticated
@@ -87,7 +83,7 @@ struct LoginView: View {
                     }
                 }
                 
-                Button(action: (viewModel.flow == .login ?  signInWithEmailPassword : signUpWithEmailPassword)) {
+                Button(action: (viewModel.flow == .login ?  signIn : signUp)) {
                     if viewModel.authenticationState != .authenticating {
                         Text(viewModel.flow == .login ? "Login" : "Sign Up")
                             .padding(.vertical, 8)
