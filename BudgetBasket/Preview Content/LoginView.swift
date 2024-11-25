@@ -14,14 +14,14 @@ private enum FocusableField: Hashable {
 
 struct LoginView: View {
   @EnvironmentObject var viewModel: Authentication
-  @State private var navigateToHome = false
+  @State private var loggedIn = false
   @FocusState private var focus: FocusableField?
 
   private func signIn() {
     Task {
         if await viewModel.signInWithEmailPassword() == true {
             viewModel.authenticationState = .authenticated
-            navigateToHome = true
+            loggedIn = true
         }
     }
   }
@@ -29,17 +29,16 @@ struct LoginView: View {
         Task {
             if await viewModel.signUpWithEmailPassword() == true {
                 viewModel.authenticationState = .authenticated
-                navigateToHome = true
+                loggedIn = true
             }
         }
     }
     
-    
 
     var body: some View {
-        if (!navigateToHome) {
+        if (!loggedIn) {
             VStack {
-                Image("Login")
+                Image(" ")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(minHeight: 300, maxHeight: 400)
@@ -55,9 +54,6 @@ struct LoginView: View {
                         .disableAutocorrection(true)
                         .focused($focus, equals: .email)
                         .submitLabel(.next)
-                        .onSubmit {
-                            self.focus = .password
-                        }
                 }
                 .padding(.vertical, 6)
                 .background(Divider(), alignment: .bottom)
@@ -69,7 +65,11 @@ struct LoginView: View {
                         .focused($focus, equals: .password)
                         .submitLabel(.go)
                         .onSubmit {
-                            //signInWithEmailPassword()
+                            if viewModel.flow == .login {
+                                signIn()
+                            } else {
+                                signUp()
+                            }
                         }
                 }
                 .padding(.vertical, 6)
