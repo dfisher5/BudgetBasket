@@ -66,33 +66,42 @@ struct HomeScreenView: View {
         GeometryReader { geo in
             VStack {
                 if viewModel.authenticationState == .unauthenticated {
+                    Spacer()
                     LoginView()
+                    Spacer()
                 } else {
                     // Tab View
                     Spacer()
                     TabView() {
-                        // Grocery List View
-                        GroceryListView().environmentObject(itemStore)
-                            .tabItem() {
-                                Image(systemName: "list.bullet.rectangle")
-                            }
-                        // Search
-                        SearchView().environmentObject(itemStore)
-                            .tabItem() {
-                                Image(systemName: "magnifyingglass")
-                            }
-                        // Cart
-                        CartView().environmentObject(itemStore)
-                            .tabItem() {
-                                Image(systemName: "cart")
-                            }
-                        // Logout
-                        LogoutView().environmentObject(itemStore)
-                            .tabItem() {
-                                Image(systemName: "person.circle.fill")
-                            }
+                        Group {
+                            // Grocery List View
+                            GroceryListView().environmentObject(itemStore)
+                                .tabItem() {
+                                    Image(systemName: "list.bullet.rectangle")
+                                        .padding(.bottom, -20)
+                                }
+                            // Search
+                            SearchView().environmentObject(itemStore)
+                                .tabItem() {
+                                    Image(systemName: "magnifyingglass")
+                                        .padding(.bottom, -20)
+                                }
+                            // Cart
+                            CartView().environmentObject(itemStore)
+                                .tabItem() {
+                                    Image(systemName: "cart")
+                                        .padding(.bottom, -20)
+                                }
+                            // Logout
+                            LogoutView().environmentObject(itemStore)
+                                .tabItem() {
+                                    Image(systemName: "person.circle.fill")
+                                }
+                        }
+                        .toolbarBackground(Color.theme.tab, for: .tabBar)
+                        .toolbarBackground(.visible, for: .tabBar)
                     }
-                    .accentColor(.cyan)
+                    .accentColor(Color.theme.accent)
                 }
             }
         }

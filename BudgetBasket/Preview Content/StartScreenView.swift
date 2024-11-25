@@ -25,7 +25,7 @@ struct StartScreenView: View {
                 VStack {
                     Image(systemName: "basket")
                         .font(.system(size: 65))
-                        .foregroundColor(.cyan)
+                        .foregroundStyle(Color.theme.accent)
                         .padding(.bottom, 10)
                     Text("Budget Basket")
                         .font(.system(size: 35))

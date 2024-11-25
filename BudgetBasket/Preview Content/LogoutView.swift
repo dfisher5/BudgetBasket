@@ -23,10 +23,6 @@ struct LogoutView: View {
     var body: some View {
         if (!loggedOut) {
             VStack {
-                Image(" ")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(minHeight: 300, maxHeight: 400)
                 Text("Logout")
                     .font(.largeTitle)
                     .fontWeight(.bold)

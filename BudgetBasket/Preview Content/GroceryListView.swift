@@ -29,54 +29,55 @@ struct GroceryListView: View {
     }
 
     var body: some View {
-        VStack() {
-            NavigationStack {
-                Toggle("Edit Mode", isOn: $editing) .padding()
-                if editing {
-                    List {
-                        ForEach(groceryList.itemsWithQuantities, id: \.id) { item in
-                            HStack {
-                                NavigationLink {
-                                    QuantityEditView(itemQuantity: item.quantity, itemName: item.itemName)
-                                } label: {
-                                    Text("\(item.quantity) ").opacity(0.5)
-                                    Text("\(item.itemName)")
-                                }.swipeActions(edge: .trailing){
-                                    Button(role: .destructive){
-                                        groceryList.itemsWithQuantities.removeAll(where: { $0 == item})
+        ZStack {
+            VStack() {
+                NavigationStack {
+                    Toggle("Edit Mode", isOn: $editing).padding()
+                    if editing {
+                        List {
+                            ForEach(groceryList.itemsWithQuantities, id: \.id) { item in
+                                HStack {
+                                    NavigationLink {
+                                        QuantityEditView(itemQuantity: item.quantity, itemName: item.itemName)
                                     } label: {
-                                        Label("Delete", systemImage: "trash")
+                                        Text("\(item.quantity) ").opacity(0.5)
+                                        Text("\(item.itemName)")
+                                    }.swipeActions(edge: .trailing){
+                                        Button(role: .destructive){
+                                            groceryList.itemsWithQuantities.removeAll(where: { $0 == item})
+                                        } label: {
+                                            Label("Delete", systemImage: "trash")
+                                        }
                                     }
                                 }
                             }
                         }
+                    } else {
+                        List {
+                            ForEach(groceryList.itemsWithQuantities, id: \.id) { item in
+                                NavigationLink {
+                                    ItemDetailView(itemName: item.itemName).environmentObject(itemStore)
+                                } label: {
+                                    Text("\(item.quantity) ").opacity(0.5)
+                                    Text("\(item.itemName)")
+                                }
+                            }
+                        }.searchable(text: $itemToAdd) {
+                            ForEach(allItemNames.filter { $0.localizedCaseInsensitiveContains(itemToAdd) }, id: \.self) { suggestion in
+                                Button {
+                                    itemToAdd = suggestion
+                                    addToList()
+                                    itemToAdd = ""
+                                } label: {
+                                    Text(suggestion)
+                                }
+                            }
+                        }.textInputAutocapitalization(.never)
+                            .navigationTitle("Grocery List")
                     }
-                } else {
-                    List {
-                        ForEach(groceryList.itemsWithQuantities, id: \.id) { item in
-                            NavigationLink {
-                                ItemDetailView(itemName: item.itemName).environmentObject(itemStore)
-                            } label: {
-                                Text("\(item.quantity) ").opacity(0.5)
-                                Text("\(item.itemName)")
-                            }
-                        }
-                    }.searchable(text: $itemToAdd) {
-                        ForEach(allItemNames.filter { $0.localizedCaseInsensitiveContains(itemToAdd) }, id: \.self) { suggestion in
-                            Button {
-                                itemToAdd = suggestion
-                                addToList()
-                                itemToAdd = ""
-                            } label: {
-                                Text(suggestion)
-                            }
-                        }
-                    }.textInputAutocapitalization(.never)
-                        .navigationTitle("Grocery List")
                 }
-              }
+            }
         }
-            
     }
 
 }

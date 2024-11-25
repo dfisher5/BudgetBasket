@@ -39,17 +39,13 @@ struct LoginView: View {
     var body: some View {
         if (!loggedIn) {
             VStack {
-                Image(" ")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(minHeight: 300, maxHeight: 400)
                 Text(viewModel.flow == .login ? "Login" : "Sign Up")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 HStack {
-                    Image(systemName: "at")
+                    Image(systemName: "at").foregroundStyle(Color.theme.accent)
                     TextField("Email", text: $viewModel.email)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
@@ -61,7 +57,7 @@ struct LoginView: View {
                 .padding(.bottom, 4)
                 
                 HStack {
-                    Image(systemName: "lock")
+                    Image(systemName: "lock").foregroundStyle(Color.theme.accent)
                     SecureField("Password", text: $viewModel.password)
                         .focused($focus, equals: .password)
                         .submitLabel(.go)

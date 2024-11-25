@@ -16,7 +16,7 @@ struct SearchView: View {
                     Text("Add item")
                     .padding(.horizontal, 100)
                     .padding(.vertical, 10)
-                    .background(Color.blue)
+                    .background(Color.theme.accent)
                     .foregroundColor(.white)
                     .cornerRadius(10)
                     .font(.title3)

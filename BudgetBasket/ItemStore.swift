@@ -21,14 +21,14 @@ class ItemStore: ObservableObject {
     
     init() {
         allItems = []
-        allItems.append(GroceryItem(itemNumber: 1))
-        allItems.append(GroceryItem(itemNumber: 2))
-        allItems.append(GroceryItem(itemNumber: 3))
-        allItems.append(GroceryItem(itemNumber: 4))
-        allItems.append(GroceryItem(itemNumber: 5))
-        allItems.append(GroceryItem(itemNumber: 6))
-        allItems.append(GroceryItem(itemNumber: 7))
-        allItems.append(GroceryItem(itemNumber: 8))
+//        allItems.append(GroceryItem(itemNumber: 1))
+//        allItems.append(GroceryItem(itemNumber: 2))
+//        allItems.append(GroceryItem(itemNumber: 3))
+//        allItems.append(GroceryItem(itemNumber: 4))
+//        allItems.append(GroceryItem(itemNumber: 5))
+//        allItems.append(GroceryItem(itemNumber: 6))
+//        allItems.append(GroceryItem(itemNumber: 7))
+//        allItems.append(GroceryItem(itemNumber: 8))
     }
     
     func addItem(item : GroceryItem) {

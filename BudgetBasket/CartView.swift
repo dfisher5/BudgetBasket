@@ -22,6 +22,8 @@ struct CartView: View {
     @State private var itemNames = [String]()
     @State private var quantities = [String : Int]()
     
+    @State var overallTotal : Double = 0.0
+    
     private var intNumStores : Int { Int(numberOfStores.prefix(1)) ?? 1}
     
     func populateArrays() {
@@ -57,7 +59,7 @@ struct CartView: View {
     func minIndexOfGiven(itemPrice: [Double], stores: [Int]) -> Int {
         var minIndex = 0
         for i in 1..<stores.count {
-            if (itemPrice[stores[i]] < itemPrice[stores[minIndex]] && itemPrice[stores[i]] != 0) {
+            if ((itemPrice[stores[i]] < itemPrice[stores[minIndex]] && itemPrice[stores[i]] != 0) || itemPrice[stores[minIndex]] == 0) {
                 minIndex = i
             }
         }
@@ -67,7 +69,7 @@ struct CartView: View {
     func minOfGiven(itemPrice: [Double], stores: [Int]) -> Double {
         var minPrice = itemPrice[0]
         for i in stores {
-            if (itemPrice[i] < minPrice && itemPrice[i] != 0) {
+            if ((itemPrice[i] < minPrice && itemPrice[i] != 0) || minPrice == 0) {
                 minPrice = itemPrice[i]
             }
         }
@@ -177,6 +179,8 @@ struct CartView: View {
         return prices
     }
     
+    
+    
 //    func getQuantities(list: [String : [String : Double]], quantities: String, storeName: String) -> Int {
 //        var quants = [Int]()
 //        for (key, value) in list {
@@ -193,6 +197,17 @@ struct CartView: View {
         for item in items {
             total += item
         }
+        return total
+    }
+    
+    func overallTotal(list: [String : [String : Double]]) -> Double {
+        var total = 0.0
+        for (_, itemInfo) in list {
+            for (_, itemPrice) in itemInfo {
+                total += itemPrice
+            }
+        }
+        
         return total
     }
 
@@ -222,6 +237,9 @@ struct CartView: View {
                                 Text("\($0)")
                             }
                         }
+                        .onChange(of: numberOfStores) {
+                            overallTotal = 0.0
+                        }
                     Spacer()
                 }
                 .padding(.leading, 30)
@@ -232,6 +250,7 @@ struct CartView: View {
                         // Run the proper methods
                         var bestStores = determineBestStoreCombo(itemNames: itemNames, itemPrices: prices, numStores: intNumStores)
                         var splitUpList = splitList(itemNames: itemNames, itemPrices: prices, stores: bestStores)
+                        var totalToSpend = overallTotal(list: splitUpList)
                         
                         // Print list
                         ForEach(getStoreNames(list: splitUpList), id: \.self) { thisStore in
@@ -256,9 +275,9 @@ struct CartView: View {
                                             }.padding(.leading, 25)
                                         }
                                         HStack {
-                                            Text(String(format: "\(thisStore) Total - $%.2f", storeTotal)).underline()
                                             Spacer()
-                                        }.padding(.leading, 35)
+                                            Text(String(format: "\(thisStore) Total - $%.2f", storeTotal)).underline().italic().font(.system(size: 18))
+                                        }.padding(.trailing, 35)
                                     }
                                 }
                                 .frame(width: UIScreen.main.bounds.width - 40)
@@ -267,6 +286,12 @@ struct CartView: View {
                                 .background(.gray.opacity(0.1))
                                 .cornerRadius(10.0)
                             }
+                        }
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            Text(String(format: "Overall Total - $%.2f", totalToSpend)).bold().font(.system(size: 20))
+                                .padding(.trailing, 10)
                         }
                     }
                 }

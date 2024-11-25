@@ -177,9 +177,9 @@ struct AddItemView: View {
                     Button(action : {addItem()}) {
                             Text("Add Item")
                             .frame(width: UIScreen.main.bounds.width - 40, height: 50)
-                            .background(.blue)
+                            .background(Color.theme.accent)
                             .foregroundStyle(.white)
-                            .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(.blue, lineWidth: 2))
+                            .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.theme.accent, lineWidth: 2))
                             .cornerRadius(15)
                     }
                 }.padding()
