@@ -22,7 +22,7 @@ struct SearchView: View {
                     .font(.title3)
                 }
                 List {
-                    ForEach(searchResults, id: \.self) { item in
+                    ForEach(searchResults.sorted(), id: \.self) { item in
                         NavigationLink {
                             ItemDetailView(itemName: item).environmentObject(itemStore)
                         } label: {
