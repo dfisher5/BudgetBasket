@@ -141,12 +141,12 @@ struct EditItemView: View {
                             VStack {
                                 Button(action : {editItem()}) {
                                     Text("Save changes")
-                                        .frame(width: UIScreen.main.bounds.width - 40, height: 50)
-                                        .background(Color.theme.accent)
-                                        .foregroundStyle(.white)
-                                        .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.theme.accent, lineWidth: 2))
-                                        .cornerRadius(15)
+                                        .frame(maxWidth: .infinity, maxHeight: 35)
+                                        .buttonStyle(.borderedProminent)
                                 }
+                                .disabled(itemPriceStr.count < 1)
+                                .buttonStyle(.borderedProminent)
+                                .frame(maxWidth: .infinity)
                             }.padding()
                         }.frame(width: geo.size.width, height: geo.size.height)
                     } else {

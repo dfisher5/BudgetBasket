@@ -174,14 +174,15 @@ struct AddItemView: View {
                 
                 // ADD BUTTON
                 VStack {
+                    Text((items.allItems.first(where: { $0.itemName == itemName }) != nil) ? "Item already exists in the database" : " ").foregroundStyle(.red)
                     Button(action : {addItem()}) {
                             Text("Add Item")
-                            .frame(width: UIScreen.main.bounds.width - 40, height: 50)
-                            .background(Color.theme.accent)
-                            .foregroundStyle(.white)
-                            .overlay(RoundedRectangle(cornerRadius: 10.0).stroke(Color.theme.accent, lineWidth: 2))
-                            .cornerRadius(15)
+                            .frame(maxWidth: .infinity, maxHeight: 35)
+                            .buttonStyle(.borderedProminent)
                     }
+                    .disabled(itemName.count < 1 || itemPriceStr.count < 1 || (items.allItems.first(where: { $0.itemName == itemName }) != nil))
+                    .buttonStyle(.borderedProminent)
+                    .frame(maxWidth: .infinity)
                 }.padding()
             }
                 .frame(width: geo.size.width, height: geo.size.height)
