@@ -19,7 +19,8 @@ struct LoginView: View {
     
     private func signIn() {
         Task {
-            if await viewModel.signInWithEmailPassword() == true {
+            let isSignedIn = await viewModel.signInWithEmailPassword()
+            if isSignedIn {
                 viewModel.authenticationState = .authenticated
                 loggedIn = true
                 viewModel.errorMessage = ""
@@ -28,7 +29,8 @@ struct LoginView: View {
     }
     private func signUp() {
         Task {
-            if await viewModel.signUpWithEmailPassword() == true {
+            let isSignedUp = await viewModel.signUpWithEmailPassword()
+            if isSignedUp {
                 viewModel.authenticationState = .authenticated
                 loggedIn = true
             }
