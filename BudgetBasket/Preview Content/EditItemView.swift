@@ -45,7 +45,10 @@ struct EditItemView: View {
                 // Go through the stores and find the correct one
                 for j in items.allItems[i].stores.indices {
                     if (items.allItems[i].stores[j].storeName == store) {
-                        items.allItems[i].stores[j].price = price
+                        // Only update price if it wasn't left blank
+                        if (price != 0.0) {
+                            items.allItems[i].stores[j].price = price
+                        }
                         items.allItems[i].stores[j].salePrice = salePrice
                     }
                     let updatedStore: [String: Any] = [
@@ -180,9 +183,10 @@ struct EditItemView: View {
                                 Button(action : {editItem()}) {
                                     Text("Save changes")
                                         .frame(maxWidth: .infinity, maxHeight: 35)
+                                        .frame(height: 35)
                                         .buttonStyle(.borderedProminent)
                                 }
-                                .disabled(itemPriceStr.count < 1)
+                                .disabled(itemPriceStr.count < 1 && image.selectedImage == nil)
                                 .buttonStyle(.borderedProminent)
                                 .frame(maxWidth: .infinity)
                             }.padding()

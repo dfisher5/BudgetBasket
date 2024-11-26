@@ -191,6 +191,7 @@ struct AddItemView: View {
                 .padding(.leading, 30)
                 .padding(.trailing, 30)
                 .padding(.bottom, 25)
+               
                 Spacer()
                 
                 // ADD BUTTON
@@ -198,7 +199,8 @@ struct AddItemView: View {
                     Text((items.allItems.first(where: { $0.itemName == itemName }) != nil) ? "Item already exists in the database" : " ").foregroundStyle(.red)
                     Button(action : {addItem()}) {
                             Text("Add Item")
-                            .frame(maxWidth: .infinity, maxHeight: 35)
+                            .frame(maxWidth: .infinity, maxHeight: 50)
+                            .frame(height: 35)
                             .buttonStyle(.borderedProminent)
                     }
                     .disabled(itemName.count < 1 || itemPriceStr.count < 1 || (items.allItems.first(where: { $0.itemName == itemName }) != nil))
