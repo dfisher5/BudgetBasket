@@ -49,13 +49,16 @@ struct HomeScreenView: View {
                 var stores = d.data()["stores"] as! Array<Dictionary<String, Any>>
                 var storesToAdd = [Store]()
                 
-                // Hannaford
+                // Sale price
                 for s in stores {
                     storesToAdd.append(Store(storeName: s["name"] as! String, price: s["price"] as! Double, salePrice: s["temporaryPrice"] as! Bool))
                 }
                 
-                itemStore.addItem(item: GroceryItem(itemName: itemName, stores: storesToAdd))
-            } 
+                // Image
+                var itemImage = d.data()["image"] as! String
+                
+                itemStore.addItem(item: GroceryItem(itemName: itemName, stores: storesToAdd, itemImage: itemImage))
+            }
             
         }
         

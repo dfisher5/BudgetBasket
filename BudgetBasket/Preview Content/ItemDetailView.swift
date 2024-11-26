@@ -16,6 +16,16 @@ struct ItemDetailView: View {
                             .padding(.top, 20)
                             .frame(alignment: .leading)
                         Spacer()
+                        
+                        if let imageData = Data(base64Encoded: item.itemImage),
+                           let decodedImage = UIImage(data: imageData) {
+                            Image(uiImage: decodedImage)
+                                .resizable()
+                                .scaledToFit()
+                        } else {
+                            Text("Image unavailable")
+                        }
+                        
                         List {
                             ForEach(item.stores, id: \.self) { store in
                                 if (store.price != 0.0) {
@@ -23,7 +33,7 @@ struct ItemDetailView: View {
                                 }
                             }
                         }
-                        NavigationLink(destination: EditItemView(passedItemName: itemName).environmentObject(itemStore).environmentObject(redrawFlag).environmentObject(FirebaseFunctions())) {
+                        NavigationLink(destination: EditItemView(passedItemName: itemName).environmentObject(itemStore).environmentObject(redrawFlag).environmentObject(FirebaseFunctions()).environmentObject(ImageFunctions())) {
                             Text("Edit item")
                                 .padding(.horizontal, 100)
                                 .padding(.vertical, 10)

@@ -32,7 +32,7 @@ struct CartView: View {
             itemNames.append(item.itemName)
             quantities[item.itemName] = item.quantity
             var itemToDisplay: GroceryItem {
-                itemStore.allItems.first(where: { $0.itemName == item.itemName }) ?? GroceryItem(itemNumber: 1)
+                itemStore.allItems.first(where: { $0.itemName == item.itemName })!
             }
             var itemPrices : [Double] = [0, 0, 0, 0]
             for curStore in itemToDisplay.stores {

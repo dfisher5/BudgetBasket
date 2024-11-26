@@ -12,9 +12,10 @@ import FirebaseFirestore
 class FirebaseFunctions: ObservableObject {
     private let db = Firestore.firestore()
     
-    func addNewEntry(item: [String: Any], stores: [[String: Any]]) {
+    func addNewEntry(item: [String: Any], stores: [[String: Any]], image: String) {
         var itemWithStores = item
         itemWithStores["stores"] = stores
+        itemWithStores["image"] = image
         
         db.collection("items").addDocument(data: itemWithStores) { error in
             if let error = error {
@@ -25,12 +26,15 @@ class FirebaseFunctions: ObservableObject {
         }
     }
     
-    func editEntry(item: String, stores: [[String: Any]]) {
+    func editEntry(item: String, stores: [[String: Any]], image: String) {
         Task {
             var itemWithStores: [String: Any] = [:]
             itemWithStores["name"] = item
             itemWithStores["stores"] = stores
-            let storeData: [String: Any] = ["stores": stores]
+            itemWithStores["image"] = image
+            
+            print("Stores data being uploaded: \(stores)")
+
             do {
                 let query = try await self.db.collection("items").whereField("name", isEqualTo: item).getDocuments()
                 let document = query.documents.first
