@@ -46,7 +46,7 @@ struct EditItemView: View {
                 for j in items.allItems[i].stores.indices {
                     if (items.allItems[i].stores[j].storeName == store) {
                         // Only update price if it wasn't left blank
-                        if (price != 0.0) {
+                        if (itemPriceStr.count > 0) {
                             items.allItems[i].stores[j].price = price
                         }
                         items.allItems[i].stores[j].salePrice = salePrice
