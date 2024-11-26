@@ -8,24 +8,24 @@ import Combine
 import AuthenticationServices
 
 private enum FocusableField: Hashable {
-  case email
-  case password
+    case email
+    case password
 }
 
 struct LoginView: View {
-  @EnvironmentObject var viewModel: Authentication
-  @State private var loggedIn = false
-  @FocusState private var focus: FocusableField?
-
-  private func signIn() {
-    Task {
-        if await viewModel.signInWithEmailPassword() == true {
-            viewModel.authenticationState = .authenticated
-            loggedIn = true
-            viewModel.errorMessage = ""
+    @EnvironmentObject var viewModel: Authentication
+    @State private var loggedIn = false
+    @FocusState private var focus: FocusableField?
+    
+    private func signIn() {
+        Task {
+            if await viewModel.signInWithEmailPassword() == true {
+                viewModel.authenticationState = .authenticated
+                loggedIn = true
+                viewModel.errorMessage = ""
+            }
         }
     }
-  }
     private func signUp() {
         Task {
             if await viewModel.signUpWithEmailPassword() == true {
@@ -35,7 +35,7 @@ struct LoginView: View {
         }
     }
     
-
+    
     var body: some View {
         if (!loggedIn) {
             VStack {
@@ -44,6 +44,33 @@ struct LoginView: View {
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
+                // Get Name when logging in for the first time
+                if (viewModel.flow == .signUp) {
+                    
+                    // First Name
+                    HStack {
+                        Image(systemName: "person").foregroundStyle(Color.theme.accent)
+                        TextField("First Name", text: $viewModel.firstName)
+                            .disableAutocorrection(true)
+                            .submitLabel(.next)
+                    }
+                    .padding(.vertical, 6)
+                    .background(Divider(), alignment: .bottom)
+                    .padding(.bottom, 4)
+                    
+                    // Last Name
+                    HStack {
+                        Image(systemName: "person").foregroundStyle(Color.theme.accent)
+                        TextField("Last Name", text: $viewModel.lastName)
+                            .disableAutocorrection(true)
+                            .submitLabel(.next)
+                    }
+                    .padding(.vertical, 6)
+                    .background(Divider(), alignment: .bottom)
+                    .padding(.bottom, 4)
+                }
+                
+                // Email
                 HStack {
                     Image(systemName: "at").foregroundStyle(Color.theme.accent)
                     TextField("Email", text: $viewModel.email)
@@ -56,6 +83,7 @@ struct LoginView: View {
                 .background(Divider(), alignment: .bottom)
                 .padding(.bottom, 4)
                 
+                // Password
                 HStack {
                     Image(systemName: "lock").foregroundStyle(Color.theme.accent)
                     SecureField("Password", text: $viewModel.password)
@@ -80,6 +108,7 @@ struct LoginView: View {
                     }
                 }
                 
+                // Button
                 Button(action: (viewModel.flow == .login ?  signIn : signUp)) {
                     if viewModel.authenticationState != .authenticating {
                         Text(viewModel.flow == .login ? "Login" : "Sign Up")
@@ -93,7 +122,7 @@ struct LoginView: View {
                             .frame(maxWidth: .infinity)
                     }
                 }
-                .disabled(!viewModel.isValid)
+                .disabled((viewModel.flow == .login) ? !viewModel.isValid : (!viewModel.isValid || viewModel.firstName.count < 1 || viewModel.lastName.count < 1))
                 .frame(maxWidth: .infinity)
                 .buttonStyle(.borderedProminent)
                 
@@ -119,12 +148,12 @@ struct LoginView: View {
 }
 
 struct LoginView_Previews: PreviewProvider {
-  static var previews: some View {
-    Group {
-      LoginView()
-      LoginView()
-        .preferredColorScheme(.dark)
+    static var previews: some View {
+        Group {
+            LoginView()
+            LoginView()
+                .preferredColorScheme(.dark)
+        }
+        .environmentObject(Authentication())
     }
-    .environmentObject(Authentication())
-  }
 }
