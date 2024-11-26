@@ -66,7 +66,16 @@ struct GroceryListView: View {
                             ForEach(allItemNames.filter { $0.localizedCaseInsensitiveContains(itemToAdd) }, id: \.self) { suggestion in
                                 Button {
                                     itemToAdd = suggestion
-                                    addToList()
+                                    // If the item to add is already in the list increase the quantity
+                                    if ((groceryList.itemsWithQuantities.first(where: {$0.itemName == itemToAdd})) == nil) {
+                                        addToList()
+                                    } else {
+                                        for i in 0 ..< groceryList.itemsWithQuantities.count {
+                                            if (groceryList.itemsWithQuantities[i].itemName == itemToAdd) {
+                                                groceryList.itemsWithQuantities[i].increaseQuantity()
+                                            }
+                                        }
+                                    }
                                     itemToAdd = ""
                                 } label: {
                                     Text(suggestion)
