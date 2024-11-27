@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import PhotosUI
 
-class ImageFunctions: ObservableObject {
+@MainActor class ImageFunctions: ObservableObject {
     @Published var selectedImage: UIImage? = nil
     @Published var photoPickerSelection: PhotosPickerItem? = nil {
         didSet {
