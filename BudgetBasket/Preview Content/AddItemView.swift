@@ -53,8 +53,8 @@ struct AddItemView: View {
                 for s in stores {
                     storesToAdd.append(Store(storeName: s["name"] as! String, price: s["price"] as! Double, salePrice: s["temporaryPrice"] as! Bool))
                 }
-                let compressedImage = image.compressImage(image: image.selectedImage ?? UIImage()) ?? "n/a"
-                items.addItem(item: GroceryItem(itemName: itemName, stores: storesToAdd, itemImage: compressedImage))
+                var itemImage = d.data()["image"] as! String
+                items.addItem(item: GroceryItem(itemName: itemName, stores: storesToAdd, itemImage: itemImage))
             }
             
         }
