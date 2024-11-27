@@ -33,8 +33,6 @@ class FirebaseFunctions: ObservableObject {
             itemWithStores["stores"] = stores
             itemWithStores["image"] = image
             
-            print("Stores data being uploaded: \(stores)")
-
             do {
                 let query = try await self.db.collection("items").whereField("name", isEqualTo: item).getDocuments()
                 let document = query.documents.first
