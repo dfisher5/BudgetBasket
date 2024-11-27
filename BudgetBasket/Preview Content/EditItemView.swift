@@ -59,11 +59,14 @@ struct EditItemView: View {
                     editedStores.append(updatedStore)
                 }
                 // Check if image has changed, update editedImage if it has
-                editedImage = items.allItems[i].itemImage
-                let compressedImage = image.compressImage(image: image.selectedImage ?? UIImage()) ?? "n/a"
-                if (items.allItems[i].itemImage != compressedImage) {
-                    editedImage = compressedImage
-                    items.allItems[i].itemImage = editedImage
+                if let selectedImage = image.selectedImage {
+                    let compressedImage = image.compressImage(image: selectedImage) ?? "n/a"
+                    if items.allItems[i].itemImage != compressedImage {
+                        editedImage = compressedImage
+                        items.allItems[i].itemImage = editedImage
+                    }
+                } else {
+                    editedImage = items.allItems[i].itemImage
                 }
             }
         }
