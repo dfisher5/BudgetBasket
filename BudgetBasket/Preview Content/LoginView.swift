@@ -2,6 +2,8 @@
 // LoginView.swift
 //
 // Heavily sourced from Peter Friese, created on 08.07.2022
+// https://github.com/FirebaseExtended/firebase-video-samples/tree/main
+//
 
 import SwiftUI
 import Combine

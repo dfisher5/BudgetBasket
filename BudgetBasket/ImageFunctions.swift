@@ -17,6 +17,8 @@ class ImageFunctions: ObservableObject {
         }
     }
     
+    // This function was created largely following the below video
+    // https://www.youtube.com/watch?v=IZEYVX4vTOA&t=538s
     private func setImage(from selection: PhotosPickerItem?) {
         guard let selection else { return }
         Task {
@@ -30,16 +32,10 @@ class ImageFunctions: ObservableObject {
     }
     
     func compressImage(image: UIImage) -> String? {
-        var compression: CGFloat = 1.0
+        let compression: CGFloat = 0.8
+        // Firebase max size for data
         let maxSize: Int = 1048487
-        var compressedData = image.jpegData(compressionQuality: compression)
-        
-        while let data = compressedData, data.count > maxSize && compression > 0 {
-            compression -= 0.1
-            compressedData = image.jpegData(compressionQuality: compression)
-            print("image size: \(data.count)")
-        }
-        
+        let compressedData = image.jpegData(compressionQuality: compression)
         if let compressedData = compressedData, compressedData.count <= maxSize {
             return compressedData.base64EncodedString()
         } else {
