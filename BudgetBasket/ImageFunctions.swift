@@ -32,7 +32,7 @@ import PhotosUI
     }
     
     func compressImage(image: UIImage) -> String? {
-        let compression: CGFloat = 0.8
+        let compression: CGFloat = 0.5
         // Firebase max size for data
         let maxSize: Int = 1048487
         let compressedData = image.jpegData(compressionQuality: compression)
