@@ -83,6 +83,8 @@ struct GroceryListView: View {
                             }
                         }.textInputAutocapitalization(.never)
                             .navigationTitle("Grocery List")
+                            .toolbarBackground(Color("Background"), for: .navigationBar)
+                            .toolbarBackground(.visible, for: .navigationBar)
                     }
                 }
             }

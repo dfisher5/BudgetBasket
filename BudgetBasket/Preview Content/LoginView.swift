@@ -41,6 +41,16 @@ struct LoginView: View {
     var body: some View {
         if (!loggedIn) {
             VStack {
+                VStack {
+                    Image(systemName: "basket")
+                        .font(.system(size: 65))
+                        .foregroundStyle(Color.theme.accent)
+                        .padding(.bottom, 10)
+                    Text("Budget Basket")
+                        .font(.system(size: 35))
+                        .foregroundColor(.black)
+                        .padding(.bottom, 20)
+                }
                 Text(viewModel.flow == .login ? "Login" : "Sign Up")
                     .font(.largeTitle)
                     .fontWeight(.bold)

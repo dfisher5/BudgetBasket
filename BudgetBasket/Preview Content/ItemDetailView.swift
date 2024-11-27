@@ -22,6 +22,7 @@ struct ItemDetailView: View {
                             Image(uiImage: decodedImage)
                                 .resizable()
                                 .scaledToFit()
+                                .frame(maxHeight: 250)
                         } else {
                             Text("Image unavailable")
                         }
@@ -48,7 +49,8 @@ struct ItemDetailView: View {
                 } else {
                     Text("Item not found")
                 }
-        }
+        }/*.ignoresSafeArea(edges: .top)*/
+            .padding(.top, -70)
     }
     
     var itemToDisplay: GroceryItem? {

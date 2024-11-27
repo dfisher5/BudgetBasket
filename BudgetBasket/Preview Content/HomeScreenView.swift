@@ -101,10 +101,7 @@ struct HomeScreenView: View {
                                     Image(systemName: "person.circle.fill")
                                 }
                         }
-                        .toolbarBackground(Color.theme.tab, for: .tabBar)
-                        .toolbarBackground(.visible, for: .tabBar)
                     }
-                    .accentColor(Color.theme.accent)
                 }
             }
         }

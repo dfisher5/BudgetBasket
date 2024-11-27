@@ -38,6 +38,16 @@ struct LogoutView: View {
     var body: some View {
         if (!loggedOut) {
             VStack {
+                VStack {
+                    Image(systemName: "basket")
+                        .font(.system(size: 65))
+                        .foregroundStyle(Color.theme.accent)
+                        .padding(.bottom, 10)
+                    Text("Budget Basket")
+                        .font(.system(size: 35))
+                        .foregroundColor(.black)
+                        .padding(.bottom, 20)
+                }
                 Text("Logout")
                     .font(.largeTitle)
                     .fontWeight(.bold)

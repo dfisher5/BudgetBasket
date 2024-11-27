@@ -221,11 +221,12 @@ struct CartView: View {
                     Text("Shopping Plan")
                         .font(.largeTitle)
                         .bold()
-                        .padding(.leading, 25)
+                        .padding(.leading, 15)
+                    
                     Spacer()
                 }
-                    .padding(.bottom, 25)
-                    .padding(.top, 10)
+                    .padding(.bottom, 10)
+                    .padding(.top, 45)
                 
                 // Picker
                 HStack {
@@ -291,14 +292,11 @@ struct CartView: View {
                         HStack {
                             Spacer()
                             Text(String(format: "Overall Total - $%.2f", totalToSpend)).bold().font(.system(size: 20))
-                                .padding(.trailing, 10)
+                                .padding(.trailing, 30)
                         }
                     }
-                }
-                
-                
-                Spacer()
-            }
+                }.background(Color.white)
+            }.background(Color("Background"))
             .onAppear {
                 populateArrays()
             }

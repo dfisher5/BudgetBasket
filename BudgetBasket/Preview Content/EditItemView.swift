@@ -131,10 +131,10 @@ struct EditItemView: View {
                             
                             PhotosPicker(selection: $image.photoPickerSelection, matching: .images, label: {Text("Select image")})
                                 .padding()
-                                .background(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.blue, lineWidth: 2)
-                                )
+                                .background(Color.theme.accent)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                                .font(.title3)
                             
                             // STORE
                             VStack {

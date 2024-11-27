@@ -20,11 +20,17 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct BudgetBasketApp: App {
-//    let persistenceController = PersistenceController.shared
-    
     init() {
         // Use Firebase library to configure APIs
-         FirebaseApp.configure()
+        FirebaseApp.configure()
+        
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(Color("Background"))
+        appearance.stackedLayoutAppearance.selected.iconColor = UIColor(Color.theme.accent)
+        appearance.stackedLayoutAppearance.normal.iconColor = UIColor(Color("TabColor"))
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
     }
     
     var body: some Scene {

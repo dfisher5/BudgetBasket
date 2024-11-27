@@ -12,10 +12,11 @@ struct SearchView: View {
 
     var body: some View {
         NavigationStack {
+            Spacer().frame(height: 20)
             NavigationLink(destination: AddItemView().environmentObject(itemStore).environmentObject(FirebaseFunctions()).environmentObject(ImageFunctions())) {
                     Text("Add item")
                     .padding(.horizontal, 100)
-                    .padding(.vertical, 10)
+                    .padding(.vertical, 13.0)
                     .background(Color.theme.accent)
                     .foregroundColor(.white)
                     .cornerRadius(10)
@@ -31,7 +32,8 @@ struct SearchView: View {
                     }
                 }.searchable(text: $searchText)
                 .navigationTitle("Search Items")
-            
+                .toolbarBackground(Color("Background"), for: .navigationBar)
+                .toolbarBackground(.visible, for: .navigationBar)
         }.autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
     }
     
