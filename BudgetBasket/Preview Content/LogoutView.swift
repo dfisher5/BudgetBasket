@@ -32,6 +32,8 @@ struct LogoutView: View {
         viewModel.signOut()
         viewModel.email = ""
         viewModel.password = ""
+        viewModel.firstName = ""
+        viewModel.lastName = ""
         viewModel.authenticationState = .unauthenticated
         loggedOut = true
         
