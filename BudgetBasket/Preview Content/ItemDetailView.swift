@@ -45,12 +45,13 @@ struct ItemDetailView: View {
                         }
                         .padding(.top, 10)
                         .padding(.bottom, 10)
+                        .navigationBarTitleDisplayMode(.inline)
                     }
                 } else {
                     Text("Item not found")
                 }
         }/*.ignoresSafeArea(edges: .top)*/
-            .padding(.top, -70)
+//            .padding(.top, -70)
     }
     
     var itemToDisplay: GroceryItem? {

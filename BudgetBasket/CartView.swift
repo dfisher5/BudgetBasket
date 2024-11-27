@@ -176,20 +176,7 @@ struct CartView: View {
         
         return prices
     }
-    
-    
-    
-//    func getQuantities(list: [String : [String : Double]], quantities: String, storeName: String) -> Int {
-//        var quants = [Int]()
-//        for (key, value) in list {
-//            if (key == storeName) {
-//                for (itemName, _) in value {
-//                    // Get the quantity for that item by finding the
-//                }
-//            }
-//        }
-//    }
-    
+
     func getTotal(items: [Double]) -> Double {
         var total = 0.0
         for item in items {
@@ -253,13 +240,12 @@ struct CartView: View {
                         
                         // Print list
                         ForEach(getStoreNames(list: splitUpList), id: \.self) { thisStore in
-                            Spacer()
                             var theseItems = getItemNames(list: splitUpList, storeName: thisStore)
                             var thesePrices = getPrices(list: splitUpList, storeName: thisStore)
                             var storeTotal = getTotal(items: thesePrices)
                             if (theseItems.count != 0) {
+                                Spacer()
                                 VStack {
-                                    
                                     if (theseItems.count != 0) {
                                         Spacer()
                                         HStack {
