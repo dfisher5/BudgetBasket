@@ -36,18 +36,22 @@ struct CartView: View {
             }
             var itemPrices : [Double] = [0, 0, 0, 0]
             for curStore in itemToDisplay.stores {
+                var priceToAdd = curStore.price
+                if (priceToAdd == 0.0) {
+                    priceToAdd = 100000.0
+                }
                 // Add prices
                 if (curStore.storeName == "Hannaford") {
-                    itemPrices[0] = curStore.price
+                    itemPrices[0] = priceToAdd
                 }
                 else if (curStore.storeName == "Trader Joe's") {
-                    itemPrices[1] = curStore.price
+                    itemPrices[1] = priceToAdd
                 }
                 else if (curStore.storeName == "Shaw's") {
-                    itemPrices[2] = curStore.price
+                    itemPrices[2] = priceToAdd
                 }
                 else {
-                    itemPrices[3] = curStore.price
+                    itemPrices[3] = priceToAdd
                 }
             }
             // WILL ASSUME THAT ALL STORES ARE ACCOUNTED FOR
@@ -59,7 +63,7 @@ struct CartView: View {
     func minIndexOfGiven(itemPrice: [Double], stores: [Int]) -> Int {
         var minIndex = 0
         for i in 1..<stores.count {
-            if ((itemPrice[stores[i]] < itemPrice[stores[minIndex]] && itemPrice[stores[i]] != 0) || itemPrice[stores[minIndex]] == 0) {
+            if (itemPrice[stores[i]] < itemPrice[stores[minIndex]] && itemPrice[stores[i]] != 0) {
                 minIndex = i
             }
         }
@@ -67,9 +71,9 @@ struct CartView: View {
     }
     
     func minOfGiven(itemPrice: [Double], stores: [Int]) -> Double {
-        var minPrice = itemPrice[0]
+        var minPrice = itemPrice[stores[0]]
         for i in stores {
-            if ((itemPrice[i] < minPrice && itemPrice[i] != 0) || minPrice == 0) {
+            if (itemPrice[i] < minPrice && itemPrice[i] != 0) {
                 minPrice = itemPrice[i]
             }
         }
@@ -101,25 +105,19 @@ struct CartView: View {
     
     
     func determineBestStoreCombo(itemNames: [String], itemPrices: [[Double]], numStores: Int) -> [Int] {
-        // All permutations
-        let perm1 = [[0], [1], [2], [3]]
-        let perm2 = [[0,1], [0,2], [0,3], [1,2], [1,3], [2,3]]
-        let perm3 = [[0,1,2], [0,1,3], [0,2,3], [1,2,3]]
-        let perm4 = [[0,1,2,3]]
-        
         // Determine correct permutation to use
         var correctPerm : [[Int]]
         if (numStores == 1) {
-            correctPerm = perm1
+            correctPerm = [[0], [1], [2], [3]]
         }
         else if (numStores == 2) {
-            correctPerm = perm2
+            correctPerm = [[0,1], [0,2], [0,3], [1,2], [1,3], [2,3]]
         }
         else if (numStores == 3) {
-            correctPerm = perm3
+            correctPerm = [[0,1,2], [0,1,3], [0,2,3], [1,2,3]]
         }
         else {
-            correctPerm = perm4
+            correctPerm = [[0,1,2,3]]
         }
         
         // Calculate minimum cost
@@ -298,6 +296,11 @@ struct CartView: View {
                 }.background(Color.white)
             }.background(Color("Background"))
             .onAppear {
+                // Reset Data
+                prices = [[Double]]()
+                itemNames = [String]()
+                quantities = [String : Int]()
+                // Populate data
                 populateArrays()
             }
         }
