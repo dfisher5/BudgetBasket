@@ -128,7 +128,15 @@ struct AddItemView: View {
                         .clipped()
                         .padding(.leading, 30)
                         .padding(.bottom, 25)
+                } else {
+                    if let errorMessage = image.errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                            .font(.caption)
+                            .padding(.bottom, 10)
+                    }
                 }
+                
                 PhotosPicker(selection: $image.photoPickerSelection, matching: .images, label: {Text("Select image")})
                     .padding()
                     .background(Color.theme.accent)

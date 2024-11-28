@@ -10,10 +10,12 @@ import SwiftUI
 import PhotosUI
 
 @MainActor class ImageFunctions: ObservableObject {
+    @Published var errorMessage: String? = nil
     @Published var selectedImage: UIImage? = nil
     @Published var photoPickerSelection: PhotosPickerItem? = nil {
         didSet {
             setImage(from: photoPickerSelection)
+            errorMessage = nil
         }
     }
     
@@ -21,11 +23,17 @@ import PhotosUI
     // https://www.youtube.com/watch?v=IZEYVX4vTOA&t=538s
     private func setImage(from selection: PhotosPickerItem?) {
         guard let selection else { return }
+        errorMessage = nil
         Task {
             if let data = try? await selection.loadTransferable(type: Data.self) {
                 if let uiImage = UIImage(data: data) {
-                    selectedImage = uiImage
-                    return
+                    if let compressedImageString = compressImage(image: uiImage), compressedImageString != "n/a" {
+                        selectedImage = uiImage
+                    } else {
+                        errorMessage = "Image too large"
+                        selectedImage = nil
+                    }
+                
                 }
             }
         }
