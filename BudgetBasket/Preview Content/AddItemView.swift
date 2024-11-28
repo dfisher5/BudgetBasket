@@ -36,7 +36,7 @@ struct AddItemView: View {
     
     func getAllItems()async throws {
         // Reset Item Store
-        items.allItems = [GroceryItem]()
+        var tempItemStore = [GroceryItem]()
         
         let dbItemStore = Firestore.firestore().collection("items")
         let docs = try await dbItemStore.getDocuments()
@@ -54,10 +54,12 @@ struct AddItemView: View {
                     storesToAdd.append(Store(storeName: s["name"] as! String, price: s["price"] as! Double, salePrice: s["temporaryPrice"] as! Bool))
                 }
                 var itemImage = d.data()["image"] as! String
-                items.addItem(item: GroceryItem(itemName: itemName, stores: storesToAdd, itemImage: itemImage))
+                tempItemStore.append(GroceryItem(itemName: itemName, stores: storesToAdd, itemImage: itemImage))
             }
             
         }
+        // Swap itemstore
+        items.allItems = tempItemStore
         
     }
     

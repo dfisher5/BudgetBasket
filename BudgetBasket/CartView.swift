@@ -29,11 +29,15 @@ struct CartView: View {
     func populateArrays() {
         // Go through each item in the list
         for item in items.itemsWithQuantities {
+            guard let itemToDisplay = itemStore.allItems.first(where: { $0.itemName == item.itemName })
+            else {
+                continue // Skip this iteration if unwrapping fails
+            }
             itemNames.append(item.itemName)
             quantities[item.itemName] = item.quantity
-            var itemToDisplay: GroceryItem {
-                itemStore.allItems.first(where: { $0.itemName == item.itemName })!
-            }
+//            var itemToDisplay: GroceryItem {
+//                itemStore.allItems.first(where: { $0.itemName == item.itemName })!
+//            }
             var itemPrices : [Double] = [0, 0, 0, 0]
             for curStore in itemToDisplay.stores {
                 var priceToAdd = curStore.price
@@ -188,8 +192,8 @@ struct CartView: View {
     func overallTotal(list: [String : [String : Double]]) -> Double {
         var total = 0.0
         for (_, itemInfo) in list {
-            for (_, itemPrice) in itemInfo {
-                total += itemPrice
+            for (name, itemPrice) in itemInfo {
+                total += (itemPrice * Double(quantities[name]!))
             }
         }
         
@@ -233,50 +237,55 @@ struct CartView: View {
                 // Display the shopping trip
                 ScrollView {
                     VStack {
-                        // Run the proper methods
-                        var bestStores = determineBestStoreCombo(itemNames: itemNames, itemPrices: prices, numStores: intNumStores)
-                        var splitUpList = splitList(itemNames: itemNames, itemPrices: prices, stores: bestStores)
-                        var totalToSpend = overallTotal(list: splitUpList)
-                        
-                        // Print list
-                        ForEach(getStoreNames(list: splitUpList), id: \.self) { thisStore in
-                            var theseItems = getItemNames(list: splitUpList, storeName: thisStore)
-                            var thesePrices = getPrices(list: splitUpList, storeName: thisStore)
-                            var storeTotal = getTotal(items: thesePrices)
-                            if (theseItems.count != 0) {
-                                Spacer()
-                                VStack {
-                                    if (theseItems.count != 0) {
-                                        Spacer()
-                                        HStack {
-                                            Text("\(thisStore)").font(.title3).bold()
+                        if (itemNames.count != 0) {
+                            // Run the proper methods
+                            var bestStores = determineBestStoreCombo(itemNames: itemNames, itemPrices: prices, numStores: intNumStores)
+                            var splitUpList = splitList(itemNames: itemNames, itemPrices: prices, stores: bestStores)
+                            var totalToSpend = overallTotal(list: splitUpList)
+                            
+                            // Print list
+                            ForEach(getStoreNames(list: splitUpList), id: \.self) { thisStore in
+                                var theseItems = getItemNames(list: splitUpList, storeName: thisStore)
+                                var thesePrices = getPrices(list: splitUpList, storeName: thisStore)
+                                var storeTotal = getTotal(items: thesePrices)
+                                if (theseItems.count != 0) {
+                                    Spacer()
+                                    VStack {
+                                        if (theseItems.count != 0) {
                                             Spacer()
-                                        }.padding(.leading, 15)
-                                        ForEach(0..<theseItems.count, id: \.self) { i in
                                             HStack {
-                                                Text("\(quantities[theseItems[i]]!) ").opacity(0.5)
-                                                Text(String(format: "\(theseItems[i]) - $%.2f", thesePrices[i]))
+                                                Text("\(thisStore)").font(.title3).bold()
                                                 Spacer()
-                                            }.padding(.leading, 25)
+                                            }.padding(.leading, 15)
+                                            ForEach(0..<theseItems.count, id: \.self) { i in
+                                                HStack {
+                                                    Text("\(quantities[theseItems[i]]!) ").opacity(0.5)
+                                                    Text(String(format: "\(theseItems[i]) - $%.2f", thesePrices[i]))
+                                                    Spacer()
+                                                }.padding(.leading, 25)
+                                            }
+                                            HStack {
+                                                Spacer()
+                                                Text(String(format: "\(thisStore) Total - $%.2f", storeTotal)).underline().italic().font(.system(size: 18))
+                                            }.padding(.trailing, 35)
                                         }
-                                        HStack {
-                                            Spacer()
-                                            Text(String(format: "\(thisStore) Total - $%.2f", storeTotal)).underline().italic().font(.system(size: 18))
-                                        }.padding(.trailing, 35)
                                     }
+                                    .frame(width: UIScreen.main.bounds.width - 40)
+                                    .padding(.top, 5)
+                                    .padding(.bottom, 15)
+                                    .background(.gray.opacity(0.1))
+                                    .cornerRadius(10.0)
                                 }
-                                .frame(width: UIScreen.main.bounds.width - 40)
-                                .padding(.top, 5)
-                                .padding(.bottom, 15)
-                                .background(.gray.opacity(0.1))
-                                .cornerRadius(10.0)
+                            }
+                            Spacer()
+                            HStack {
+                                Spacer()
+                                Text(String(format: "Overall Total - $%.2f", totalToSpend)).bold().font(.system(size: 20))
+                                    .padding(.trailing, 30)
                             }
                         }
-                        Spacer()
-                        HStack {
-                            Spacer()
-                            Text(String(format: "Overall Total - $%.2f", totalToSpend)).bold().font(.system(size: 20))
-                                .padding(.trailing, 30)
+                        else {
+                            Text("No items found").frame(maxWidth: .infinity).padding(.top, 10)
                         }
                     }
                 }.background(Color.white)
